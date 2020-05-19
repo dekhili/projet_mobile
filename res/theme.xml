@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<resource majorVersion="1" minorVersion="11" useXmlUI="false">
+    <image name="4.jpg"  />
+    <image name="Back_Arrow.png"  />
+    <image name="cartouchiere-chasse-calibre-12-camouflage-marron.jpg"  />
+    <image name="Categ.jpg"  />
+    <image name="chasse sous marine.jpg"  />
+    <image name="checked.png"  />
+    <image name="conservation.jpg"  />
+    <image name="devis.png"  />
+    <image name="facture.jpg"  />
+    <image name="fusil-arbalete-chasse-sous-mar-20160415155715.jpg"  />
+    <image name="fusil-occasion-chapuis-juxtapose-becassier-1024x240.jpg"  />
+    <image name="fusildarne.jpg"  />
+    <image name="gear2.png"  />
+    <image name="gmail.png"  />
+    <image name="goemon_black.jpg"  />
+    <image name="hearts.png"  />
+    <image name="jumelles-8x25-sans-reglage.jpg"  />
+    <image name="key.png"  />
+    <image name="link.png"  />
+    <image name="logo.png"  />
+    <image name="logo_1.png"  />
+    <image name="mallette-transport-x100-cartouches-4-boites-25-cartouches-cal-12-70.jpg"  />
+    <image name="Meeting.jpg"  />
+    <image name="panier.png"  />
+    <image name="pantalon.jpg"  />
+    <image name="popcorn.png"  />
+    <image name="prod.jpg"  />
+    <image name="reclamation.png"  />
+    <image name="refresh.png"  />
+    <image name="RESERVATION-ICON.png"  />
+    <image name="R&#xe9;servation.png"  />
+    <image name="sac-a-dos-chasse-20-litres-camouflage-island-vert.jpg"  />
+    <image name="sac-a-dos-chasse-x-access-45-litres-compact-vert.jpg"  />
+    <image name="sell.png"  />
+    <image name="Sortie.jpg"  />
+    <image name="stage.png"  />
+    <image name="telecharger pdf.jpg"  />
+    <theme name="Theme">
+        <val key="@includeNativeBool" value="true" />
+        <val key="HomeForm.bgImage" value="conservation.jpg" />
+        <val key="HomeForm.bgType" value="33" />
+    </theme>
+    <image name="thunt.png"  />
+    <image name="tickets.png"  />
+    <image name="trepied-chasse-telescopique-camouflage-marron.jpg"  />
+    <image name="tutor.png"  />
+    <image name="unnamed.png"  />
+    <image name="upcoming_events.png"  />
+    <image name="user.png"  />
+    <image name="veste de combi.jpg"  />
+    <image name="video-camera.png"  />
+    <image name="voir.jpg"  />
+    <image name="warning.png"  />
+    <image name="warning2.png"  />
+</resource>
