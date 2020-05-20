@@ -25,6 +25,8 @@ import com.mycompany.myapp.services.ServiceReclamation;
 import java.util.ArrayList;
 import com.codename1.ui.Form;
 import com.codename1.ui.TextField;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Avis;
 import com.mycompany.myapp.services.ServiceAvis;
 
@@ -36,12 +38,14 @@ public class ReclamationForm  extends Form{
     Form current;
     Form f2;
     Form f3;
-
+private Resources theme;
     
  public ReclamationForm (Form previous){
      current=this;
-     setTitle("Review");
-     setLayout(BoxLayout.y());
+     theme = UIManager.initFirstTheme("/theme_2");
+     current.setTitle("Troubleshooting");
+     current.setUIID("bg9");
+     current.setLayout(BoxLayout.y());
      current.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_ADD, new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent evt) {
@@ -49,6 +53,7 @@ public class ReclamationForm  extends Form{
              addR.getF().show();
          }
      });
+     
      
      current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
          @Override
@@ -65,24 +70,26 @@ public class ReclamationForm  extends Form{
      {
          Container c1 = new Container(BoxLayout.y());
          Container c2 = new Container(BoxLayout.x());
-
+          
+         Label problem = new Label("Problem :"+r.getProbleme());
+         problem.setUIID("problemerec"); 
 
          
          Label nompr = new Label("Product :   "+r.getNomproduit());
-         Label problem = new Label("Problem :"+r.getProbleme());
+         nompr.setUIID("problemerec"); 
          Label pb = new Label("Problem :"+r.getProbleme());
-
+         pb.setUIID("problemerec"); 
          Label nometat = new Label("Etat :   "+r.getEtat());
-         
+         nometat.setUIID("problemerec"); 
 
 
-         Label ligne = new Label("---------------------------------------------------------------------------------------");
-         Label ligne2 = new Label("---------------------------------------------------------------------------------------");
-         Label ligne3 = new Label("---------------------------------------------------------------------------------------");
-         Label ligne4 = new Label("---------------------------------------------------------------------------------------");
+         Label ligne = new Label("_______________________________________________________________________________________");
+         Label ligne2 = new Label("_______________________________________________________________________________________");
+         Label ligne3 = new Label("________________________________________________________________________________________");
+         Label ligne4 = new Label("________________________________________________________________________________________");
          
          Image imgUrl; 
-                 Image placeholder = Image.createImage(140, 100); 
+                 Image placeholder = Image.createImage(600, 550); 
                  EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
                  imgUrl = URLImage.createToStorage(encImage, "" + r.getImage(), "http://localhost/projet_3a/symfony/web/images/" + r.getImage());
                  ImageViewer img = new ImageViewer(imgUrl);
@@ -97,6 +104,7 @@ public class ReclamationForm  extends Form{
              @Override
              public void actionPerformed(ActionEvent ee) {
                  Form f3=(Form) new Form(r.getNomproduit(),new BoxLayout(BoxLayout.Y_AXIS));
+                 f3.setUIID("bg8");
                  f3.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent evt) {
@@ -105,7 +113,7 @@ public class ReclamationForm  extends Form{
                      }
                  });
                  if(r.getEtat().equals("En_attend")){
-                     f3.getToolbar().addMaterialCommandToOverflowMenu("Delete", FontImage.MATERIAL_DELETE, new ActionListener() {
+                     f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_DELETE, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
                          if (Dialog.show("Alert", "You Want To Delete", "OK", "Cancel"))
@@ -116,11 +124,13 @@ public class ReclamationForm  extends Form{
                              h.getF().show();
                          }}
                  });
-                                          f3.getToolbar().addMaterialCommandToOverflowMenu("Edit", FontImage.MATERIAL_EDIT, new ActionListener() {
+                     f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_EDIT, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
                          f2 = new Form("Edit");
-                         setLayout(BoxLayout.y());
+                         f2.setUIID("bg1");
+                         f2.setLayout(BoxLayout.yCenter());
+                         
                          TextField  tfpb = new TextField("","Your Problem");
                          Button b = new Button("Edit");
                          tfpb.setText(r.getProbleme());
@@ -151,7 +161,7 @@ public class ReclamationForm  extends Form{
 
                  
          
-                 f3.addAll(cimg, nompr, ligne3, pb, ligne2, nometat);
+                 f3.addAll(cimg, nompr,  pb, nometat);
                  
          
                 

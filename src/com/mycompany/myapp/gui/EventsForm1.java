@@ -5,33 +5,52 @@
  */
 package com.mycompany.myapp.gui;
 
+import com.codename1.components.FloatingActionButton;
+import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
+import com.codename1.ui.Container;
+import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
+import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
+import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.entities.Events;
+import com.mycompany.myapp.services.ServiceEvents;
+import java.util.ArrayList;
 
 /**
  *
  * @author fedy
  */
-public class RecruitForm extends Form {
-    
-Form current;
- public RecruitForm() {
-     
-    current=this;
-        setTitle("Recruitements");
+public class EventsForm1 extends Form{
 
-         
-        setLayout(BoxLayout.y());
-        
-        
-            current.setLayout(BoxLayout.y());
-        Toolbar tb = current.getToolbar();
+    Form f;
+    private Resources theme;
+ 
+
+    public EventsForm1() {
+            theme = UIManager.initFirstTheme("/theme_2_1");
+
+
+        f = new Form();
+
+        ServiceEvents es = new ServiceEvents();
+        ArrayList<Events> listEvents = new ArrayList<>();
+        listEvents = es.getAllEvents();
+
+        f.setTitle("OLD EVENTS");
+
+        f.setLayout(BoxLayout.y());
+        f.setUIID("bg1");
+        Toolbar tb = f.getToolbar();
         
            tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
@@ -50,6 +69,7 @@ Form current;
 
             }
         });
+          
           
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
@@ -82,7 +102,7 @@ Form current;
                 recruit.getF().show();
             }
         });
-        tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 ChoiceEvents events = new ChoiceEvents();
@@ -105,14 +125,71 @@ Form current;
                 about.getF().show();
             }
         });
+         
+ 
+        //RECHERCHE
+        Container c8 = new Container(BoxLayout.x());
 
-    
-     
- }
+        TextField search = new TextField("","search");
+
+        Button searchbtn = new Button(" ");
+         searchbtn.setUIID("ButtonSearch");
+        searchbtn.addActionListener((e) -> {
+            String a = search.getText();
+            // int i = Integer.parseInt(a);
+            new searchForm(f, a).show();
+        });
+        c8.add(search);
+        c8.add(searchbtn);        
+        
+        Container c1 = new Container(BoxLayout.y());
+        Image imgUrl;
+       
+       
+        //EVENTS' LIST
+        for (Events e : listEvents) {
+            Label label2 = new Label(e.getTitre());
+            label2.setUIID("TitreEvent");
+            c1.add(label2);
+            Image placeholder = Image.createImage(800, 700);
+            EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
+
+            imgUrl = URLImage.createToStorage(encImage, "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image(), "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image());
+            ImageViewer img1 = new ImageViewer(imgUrl);
+
+             Button b = new Button (" ");
+             b.setUIID("ButtonDetails");
+            b.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+
+                    EventDetailsForm sde = new EventDetailsForm(e);
+                    sde.getF().show();
+
+                }
+            });
+
+            c1.add(img1);
+            c1.add(b);
+        }
+        f.add(c8);
+        f.add(c1);
+        
+        
+      
+
+//           Events ee = new Events("za3ma", "description", "image", "type", "adress", 0, 0, 0);
+//           es.addEvent(ee);
+//            ShowBrand a = new ShowBrand();
+//            a.getF().show();
+    }
 
     public Form getF() {
-        return current;
+        return f;
     }
-    
-    
+
+    public void setF(Form f) {
+        this.f = f;
+    }
+
 }

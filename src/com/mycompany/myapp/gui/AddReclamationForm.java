@@ -21,6 +21,8 @@ import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Evaluations;
 import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.services.EvaluationService;
@@ -34,10 +36,13 @@ import java.util.ArrayList;
  */
 public class AddReclamationForm extends Form{
     Form current;
+    private Resources theme;
  public AddReclamationForm (){
      
     current=this;
-        setTitle("New Review");
+    theme = UIManager.initFirstTheme("/theme_2");
+        setTitle("New Troubleshooting");
+        setUIID("bg9");
         setLayout(BoxLayout.yCenter());
       
          current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
@@ -47,6 +52,7 @@ public class AddReclamationForm extends Form{
            reclamation.getF().show();
             }
         });
+        
         TextField tfp = new TextField("","Your Problem ....");
         Button btnValider = new Button("Add ");
         

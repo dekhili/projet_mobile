@@ -8,6 +8,7 @@ package com.mycompany.myapp.gui;
 import com.codename1.components.ImageViewer;
 import com.codename1.ui.Button;
 import com.codename1.ui.Command;
+import static com.codename1.ui.Component.CENTER;
 import com.codename1.ui.Container;
 import com.codename1.ui.Dialog;
 import com.codename1.ui.Display;
@@ -55,8 +56,9 @@ private Resources theme;
      
      theme = UIManager.initFirstTheme("/theme_2");
      current=this;
-     setTitle("Rating");
-     setLayout(BoxLayout.y());
+     current.setTitle("Rating");
+     current.setUIID("bg9");
+     current.setLayout(BoxLayout.y());
      current.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_ADD, new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent evt) {
@@ -79,9 +81,9 @@ private Resources theme;
          Container c1 = new Container(BoxLayout.x());
 
          Label nompr = new Label(""+a.getNomproduit()+ " :");
-        
+        nompr.setUIID("problemerec"); 
          
-         Label ligne = new Label("-----------------------------------------------------------------------------------------------");
+         Label ligne = new Label("____________________________________________________________________________________");
             
          Button btnsupp = new Button("Delete");
          Button btnmodif = new Button("Edit");
@@ -127,6 +129,7 @@ private Resources theme;
              @Override
              public void actionPerformed(ActionEvent ee) {
                  Form f3=(Form) new Form(a.getNomproduit(),new BoxLayout(BoxLayout.Y_AXIS));
+                 f3.setUIID("bg1");
                  f3.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent evt) {
@@ -134,7 +137,7 @@ private Resources theme;
                          avis.getF().show();
                      }
                  });
-                  f3.getToolbar().addMaterialCommandToOverflowMenu("Delete", FontImage.MATERIAL_DELETE, new ActionListener() {
+                  f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_DELETE, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
                          if (Dialog.show("Alert", "You Want To Delet ?", "OK", "Cancel")){
@@ -144,10 +147,11 @@ private Resources theme;
                              h.getF().show();
                          }}
                  });
-                  f3.getToolbar().addMaterialCommandToOverflowMenu("Edit", FontImage.MATERIAL_EDIT, new ActionListener() {
+                  f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_EDIT, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
-                         f2 = new Form("Edit");
+                         f2 = new Form("Edit",new FlowLayout(CENTER, CENTER));
+                         f2.setUIID("panierform");
                          f2.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent evt) {
@@ -156,7 +160,7 @@ private Resources theme;
                  });
                          setLayout(BoxLayout.yCenter());
                          TextField  tfpb = new TextField("","Your Problem");
-                         
+                         Container c = new Container(BoxLayout.yCenter());
                          Slider starRank = new Slider();
     starRank.setEditable(true);
     starRank.setMinValue(1);
@@ -208,8 +212,8 @@ private Resources theme;
         
         });
                        //  tfpb.setText(a.getRate());
-    f2.add(FlowLayout.encloseCenter(starRank));
-                             f2.add(btnval);
+    c.addAll(FlowLayout.encloseCenter(starRank),btnval);
+                             f2.add(c);
 
 
                          f2.show();
@@ -219,20 +223,22 @@ private Resources theme;
                  
                  
                  Label nompr = new Label("Product Name : "+a.getNomproduit());
+                 nompr.setUIID("problemerec");
                  Label nomuser = new Label("Username : "+a.getNomuser());
+                 nomuser.setUIID("problemerec");
                  
                  Image imgUrl; 
-                 Image placeholder = Image.createImage(140, 100); 
+                 Image placeholder = Image.createImage(600, 550); 
                  EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
                  imgUrl = URLImage.createToStorage(encImage, "" + a.getImage(), "http://localhost/projet_3a/symfony/web/images/" + a.getImage());
                  ImageViewer img = new ImageViewer(imgUrl);
                  Container cimg = new Container(BoxLayout.yCenter());cimg.add(img);
                  
-                 Label ligne = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne1 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne2 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne3 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne4 = new Label("-----------------------------------------------------------------------------------------------");
+                 Label ligne = new Label("________________________________________________________________________________________________");
+                 Label ligne1 = new Label("________________________________________________________________________________________________");
+                 Label ligne2 = new Label("________________________________________________________________________________________________");
+                 Label ligne3 = new Label("________________________________________________________________________________________________");
+                 Label ligne4 = new Label("________________________________________________________________________________________________");
                  
                  
                  Container c2 = new Container(BoxLayout.xCenter());
@@ -268,7 +274,7 @@ private Resources theme;
                  Button d = new Button("Delet");
                  
                  
-                 f3.addAll( cimg, nompr, ligne1, nomuser, ligne2, c2, ligne3);
+                 f3.addAll( cimg, nompr, nomuser, c2);
                  f3.show();
                 
    

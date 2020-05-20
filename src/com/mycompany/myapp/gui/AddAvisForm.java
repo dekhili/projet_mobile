@@ -55,6 +55,7 @@ private Resources theme;
     current=this;
         setTitle("New Rating");
         setLayout(BoxLayout.yCenter());
+        setUIID("panierform");
 
          current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
             @Override
