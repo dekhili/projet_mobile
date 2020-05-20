@@ -61,11 +61,11 @@ public class EvaluationForm  extends Form {
         current.setUIID("panierform");
         current.setLayout(BoxLayout.yCenter());
         Toolbar tb = current.getToolbar();
-           tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+          tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -74,10 +74,11 @@ public class EvaluationForm  extends Form {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
+          
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -89,7 +90,7 @@ public class EvaluationForm  extends Form {
         tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                PanierForm panier = new PanierForm();
+                PanierForm panier = new PanierForm(current);
                 panier.getF().show();
             }
         });
@@ -116,7 +117,8 @@ public class EvaluationForm  extends Form {
                 events.getF().show();
             }
         });
-        tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+        
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
@@ -124,7 +126,7 @@ public class EvaluationForm  extends Form {
             }
         });
 
-        tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {   
             @Override
             public void actionPerformed(ActionEvent evt) {
                 AboutForm about = new AboutForm();
@@ -132,12 +134,15 @@ public class EvaluationForm  extends Form {
             }
         });
 
-        current.getToolbar().addCommandToLeftBar("back", null, (ev) -> {
-            EventsForm1 hf = new EventsForm1();
+        
+           current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent evt) {
+              EventsForm1 hf = new EventsForm1();
             hf.getF().show();
-
-        });
-
+         }
+     });
+       
         setLayout(BoxLayout.y());
 
         ServiceEvents se = new ServiceEvents();

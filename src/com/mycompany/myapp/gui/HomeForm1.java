@@ -5,58 +5,63 @@
  */
 package com.mycompany.myapp.gui;
 
-import com.codename1.components.FloatingActionButton;
 import com.codename1.components.ImageViewer;
+import com.codename1.components.SpanLabel;
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
+import static com.codename1.ui.Component.CENTER;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
+import com.codename1.ui.Display;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
-import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.layouts.FlowLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
 import com.mycompany.myapp.entities.Events;
+import com.mycompany.myapp.entities.Lignepanier;
+import com.mycompany.myapp.entities.Product;
+import com.mycompany.myapp.services.LignePanierService;
 import com.mycompany.myapp.services.ServiceEvents;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
+ * GUI builder created Form
  *
  * @author fedy
  */
-public class EventsForm2 {
+public class HomeForm1 extends Form {
+Form current;
 
-    Form f;
-    private Resources theme;
- 
-
-    public EventsForm2() {
-         theme = UIManager.initFirstTheme("/theme_2_1");
-        f = new Form();
-
-        ServiceEvents es = new ServiceEvents();
-        ArrayList<Events> listEvents = new ArrayList<>();
-        listEvents = es.getAllEvents3();
-
-        f.setTitle("UPCOMING EVENTTS");
-
-        f.setLayout(BoxLayout.y());
+private Resources theme;
+    public HomeForm1() {
+   
+                     Image imgUrl;
+ theme = UIManager.initFirstTheme("/theme_panier");
+          current=this;
+          
+        current.setTitle("Home");
+        current.setLayout(BoxLayout.y());
+        Toolbar tb = current.getToolbar();
+        current.setUIID("bg3");
+       // Container cnt = new Container(BoxLayout.xCenter());
         
-        f.setUIID("bg1");
-
-        Toolbar tb = f.getToolbar();
         
-           tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+     
+         tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -65,11 +70,10 @@ public class EventsForm2 {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
-          
           
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
@@ -82,7 +86,7 @@ public class EventsForm2 {
         tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                PanierForm panier = new PanierForm();
+                PanierForm panier = new PanierForm(current);
                 panier.getF().show();
             }
         });
@@ -110,7 +114,7 @@ public class EventsForm2 {
             }
         });
         
-         tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
@@ -125,80 +129,35 @@ public class EventsForm2 {
                 about.getF().show();
             }
         });
-         
-          tb.addMaterialCommandToLeftBar("", FontImage.MATERIAL_KEYBOARD_ARROW_LEFT, (ev) -> {
-            ChoiceEvents sb = new ChoiceEvents();
-            sb.getF().show();
-        });
-         
  
-        //RECHERCHE
-        Container c8 = new Container(BoxLayout.x());
-
-        TextField search = new TextField("","search");
-
-        Button searchbtn = new Button(" ");
-         searchbtn.setUIID("ButtonSearch");
-        searchbtn.addActionListener((e) -> {
-            String a = search.getText();
-            // int i = Integer.parseInt(a);
-            new searchForm(f, a).show();
-        });
-        c8.add(search);
-        c8.add(searchbtn);        
-        
-        Container c1 = new Container(BoxLayout.y());
-        
-        
-        
-        Image imgUrl;
-        //EVENTS' LIST
-        for (Events e : listEvents) {
-            Label label2 = new Label(e.getTitre());
-            label2.setUIID("TitreEvent");
-            c1.add(label2);
-            Image placeholder1 = Image.createImage(800, 700);
+         
+         
             
-            EncodedImage encImage = EncodedImage.createFromImage(placeholder1, false);
-            imgUrl = URLImage.createToStorage(encImage, "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image(), "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image());
-            ImageViewer img1 = new ImageViewer(imgUrl);
-
-             Button b = new Button (" ");
-             b.setUIID("ButtonDetails");
-            b.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-
-                    EventDetailsForm1 sde = new EventDetailsForm1(e);
-                    sde.getF().show();
-
-                }
-            });
-
-            Label sep = new Label("___________________________________________________");
-            
-            c1.add(img1);
-            c1.add(b);
-            c1.add(sep);
         }
-        f.add(c8);
-        f.add(c1);
-        
-        
-      
+    
 
-//           Events ee = new Events("za3ma", "description", "image", "type", "adress", 0, 0, 0);
-//           es.addEvent(ee);
-//            ShowBrand a = new ShowBrand();
-//            a.getF().show();
+       public Form getF() {
+        return current;
     }
 
-    public Form getF() {
-        return f;
+    public void setF(Form current) {
+        this.current = current;
     }
+    
+    
 
-    public void setF(Form f) {
-        this.f = f;
-    }
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-- DON'T EDIT BELOW THIS LINE!!!
+
+
+// <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    private void initGuiBuilderComponents(com.codename1.ui.util.Resources resourceObjectInstance) {
+        setLayout(new com.codename1.ui.layouts.LayeredLayout());
+        setInlineStylesTheme(resourceObjectInstance);
+                setInlineStylesTheme(resourceObjectInstance);
+        setTitle("HomeForm");
+        setName("HomeForm");
+    }// </editor-fold>
+
+//-- DON'T EDIT ABOVE THIS LINE!!!
 
 }

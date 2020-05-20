@@ -31,7 +31,7 @@ import java.util.Date;
  *
  * @author Emir
  */
-public class CalendarForm extends HomeForm{
+public class CalendarForm extends HomeForm1{
      Form f;
     private Resources theme;
     Events e = new Events();
@@ -41,6 +41,7 @@ public class CalendarForm extends HomeForm{
     }
     
     public CalendarForm(com.codename1.ui.util.Resources resourceObjectInstance) {
+       
         theme = UIManager.initFirstTheme("/theme_2_1");
         initGuiBuilderComponents(resourceObjectInstance);
         setLayout(BoxLayout.y());

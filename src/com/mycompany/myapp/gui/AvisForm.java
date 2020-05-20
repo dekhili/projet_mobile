@@ -66,6 +66,7 @@ private Resources theme;
              AddRate.getF().show();
          }
      });
+     
      current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent evt) {
@@ -73,6 +74,7 @@ private Resources theme;
              sav.getF().show();
          }
      });
+     
      ServiceAvis es = new ServiceAvis();
      ArrayList<Avis> listAvis = new ArrayList<>();
      listAvis = es.getAllavis();

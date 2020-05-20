@@ -52,11 +52,11 @@ public class EventsForm1 extends Form{
         f.setUIID("bg1");
         Toolbar tb = f.getToolbar();
         
-           tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+          tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -65,11 +65,10 @@ public class EventsForm1 extends Form{
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
-          
           
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
@@ -102,7 +101,7 @@ public class EventsForm1 extends Form{
                 recruit.getF().show();
             }
         });
-         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
+        tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 ChoiceEvents events = new ChoiceEvents();
@@ -110,7 +109,7 @@ public class EventsForm1 extends Form{
             }
         });
         
-         tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
@@ -124,6 +123,11 @@ public class EventsForm1 extends Form{
                 AboutForm about = new AboutForm();
                 about.getF().show();
             }
+        });
+         
+          tb.addMaterialCommandToLeftBar("", FontImage.MATERIAL_KEYBOARD_ARROW_LEFT, (ev) -> {
+            ChoiceEvents sb = new ChoiceEvents();
+            sb.getF().show();
         });
          
  
@@ -153,7 +157,6 @@ public class EventsForm1 extends Form{
             c1.add(label2);
             Image placeholder = Image.createImage(800, 700);
             EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
-
             imgUrl = URLImage.createToStorage(encImage, "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image(), "http://localhost/projet_3a/symfony/web/images/" + e.getNom_image());
             ImageViewer img1 = new ImageViewer(imgUrl);
 
@@ -169,8 +172,11 @@ public class EventsForm1 extends Form{
                 }
             });
 
+            Label sep = new Label("___________________________________________________");
+            
             c1.add(img1);
             c1.add(b);
+            c1.add(sep);
         }
         f.add(c8);
         f.add(c1);

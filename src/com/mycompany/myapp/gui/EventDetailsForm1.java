@@ -31,7 +31,7 @@ import com.mycompany.myapp.services.ServiceEvents;
  *
  * @author fedy
  */
-public class EventDetailsForm1 {
+public class EventDetailsForm1 extends Form{
 
     Form f;
     int id_event;
@@ -52,7 +52,7 @@ public class EventDetailsForm1 {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -61,11 +61,10 @@ public class EventDetailsForm1 {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
-          
           
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
@@ -98,7 +97,7 @@ public class EventDetailsForm1 {
                 recruit.getF().show();
             }
         });
-       tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
+        tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 ChoiceEvents events = new ChoiceEvents();
@@ -106,7 +105,7 @@ public class EventDetailsForm1 {
             }
         });
         
-         tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();

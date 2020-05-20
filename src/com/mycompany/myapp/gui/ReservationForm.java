@@ -44,7 +44,7 @@ public class ReservationForm extends Form {
     private Resources theme;
 
     public ReservationForm(Events events) {
-        theme = UIManager.initFirstTheme("/theme_2");
+        theme = UIManager.initFirstTheme("/theme_2_1");
 
         this.e = events;
         //  this.event_id = id;
@@ -52,14 +52,14 @@ public class ReservationForm extends Form {
         current.setTitle("Reservation");
 
         current.setLayout(BoxLayout.y());
-        setUIID("bg7");
+        setUIID("bg2");
         Toolbar tb = current.getToolbar();
         
-           tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+          tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -68,7 +68,7 @@ public class ReservationForm extends Form {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
@@ -129,11 +129,15 @@ public class ReservationForm extends Form {
             }
         });
 
-        current.getToolbar().addCommandToLeftBar("back", null, (ev) -> {
-            EventsForm2 hf = new EventsForm2();
+        
+          current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+         @Override
+         public void actionPerformed(ActionEvent evt) {
+             EventsForm2 hf = new EventsForm2();
             hf.getF().show();
-
-        });
+         }
+     });
+       
 
         setLayout(BoxLayout.y());
         System.out.println(events.getId());
