@@ -12,6 +12,7 @@ import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
 import com.mycompany.myapp.entities.Panier;
+import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +70,7 @@ public class PanierService {
     
     
      public ArrayList<Panier> getAllPanier(){ 
-       String url = "http://localhost/projet_3a/symfony/web/app_dev.php/panier/api/affP";
+       String url = Statics.BASE_URL + "/panier/affP";
         req.setUrl(url);
         req.setPost(false);
         System.out.print(req.getResponseData());

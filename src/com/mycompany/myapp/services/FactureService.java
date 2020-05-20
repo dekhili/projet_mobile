@@ -19,6 +19,7 @@ import java.util.Map;
 
 import com.mycompany.myapp.entities.Facture;
 import com.mycompany.myapp.entities.Lignepanier;
+import com.mycompany.myapp.entities.Panier;
 import com.mycompany.myapp.entities.Product;
 
 
@@ -34,7 +35,7 @@ public class FactureService {
     public boolean resultOK;
     private ConnectionRequest req;
 
-    private FactureService() {
+    public FactureService() {
          req = new ConnectionRequest();
     }
 
@@ -45,17 +46,38 @@ public class FactureService {
         return instance;
     }
     
-    public void newfact(Facture f) {
+    public boolean newfact(Facture f) {
             ConnectionRequest req = new ConnectionRequest();
-      String url = "http://localhost/projet_3a/symfony/web/app_dev.php/panier/api/newfactureapi?numtel="+f.getNumtel()+"&adresse="+f.getAdresse()+"&dateDeLivraison="+f.getDatedelivraison();
-       req.setUrl(url);
+      String url = Statics.BASE_URL + "/panier/newfactureapi?numtel="+f.getNumtel()+"&adresse="+f.getAdresse()+"&dateDeLivraison="+f.getDatedelivraison();
+      System.out.println(url);
+      req.setUrl(url);
+     req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this); //Supprimer cet actionListener
+                /* une fois que nous avons terminé de l'utiliser.
+                La ConnectionRequest req est unique pour tous les appels de 
+                n'importe quelle méthode du Service task, donc si on ne supprime
+                pas l'ActionListener il sera enregistré et donc éxécuté même si 
+                la réponse reçue correspond à une autre URL(get par exemple)*/
+                
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+        }
+    
+    public void payer(Facture f ,int idfacture) {
+           ConnectionRequest req = new ConnectionRequest();
+      String url = Statics.BASE_URL + "/panier/"+idfacture+"/paiementapi";
+      req.setUrl(url);
       req.setPost(false);
         req.addResponseListener((NetworkEvent evt) -> {
             byte[] data = (byte[]) evt.getMetaData();
             String s = new String(data);
-         
+           System.out.println(data);
         });
-       
         NetworkManager.getInstance().addToQueue(req);
     }
      
@@ -77,18 +99,21 @@ public boolean addFacture(Facture f) {
    public ArrayList<Facture> parseFacture(String jsonText){
         try {
             fact=new ArrayList<>();
-            JSONParser j = new JSONParser();
-            Map<String,Object> tasksListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
+             JSONParser j = new JSONParser();
+            Map<String,Object> ListJson = j.parseJSON(new CharArrayReader(jsonText.toCharArray()));
             
-            List<Map<String,Object>> list = (List<Map<String,Object>>)tasksListJson.get("root");
+            List<Map<String,Object>> list = (List<Map<String,Object>>)ListJson.get("root");
             for(Map<String,Object> obj : list){
                 Facture f = new Facture();
-                float id = Float.parseFloat(obj.get("id").toString());
+                System.out.println(obj.get("id").toString());
+                 float id = Float.parseFloat(obj.get("id").toString());
                 f.setIdfact((int)id);
-                f.setAdresse(obj.get("Adresse").toString());
+              /*   Map<String, Object> pan = (Map) obj.get("panier");
+                f.setPanier_id((int) Double.parseDouble(pan.get("id").toString()));*/
+                f.setAdresse(obj.get("adresse").toString());
                 f.setNumtel(obj.get("numtel").toString());
                 f.setDatedelivraison(obj.get("dateDeLivraison").toString());
-                f.setEtat(Integer.parseInt(obj.get("etat").toString()));
+                f.setEtat(Boolean.parseBoolean(obj.get("etat").toString()));
                 fact.add(f);
             }
             
@@ -99,11 +124,24 @@ public boolean addFacture(Facture f) {
         return fact;
     }
     
-    public ArrayList<Facture> getAllTasks(){
-        String url = Statics.BASE_URL+"/facture/";
+    public void getFacture(Facture f ,int idfact){
+         ConnectionRequest req = new ConnectionRequest();
+        String url = Statics.BASE_URL+"/panier/"+idfact+"/showapi";
         req.setUrl(url);
         req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
+        req.addResponseListener((NetworkEvent evt) -> {
+            byte[] data = (byte[]) evt.getMetaData();
+            String s = new String(data);
+           System.out.println(data);
+        });
+        NetworkManager.getInstance().addToQueue(req);
+    }
+
+    public ArrayList<Facture> getAllFacture(){
+      String url = Statics.BASE_URL + "/panier/allfacture";
+      req.setUrl(url);
+      req.setPost(false);
+      req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
                 fact = parseFacture(new String(req.getResponseData()));
@@ -111,8 +149,7 @@ public boolean addFacture(Facture f) {
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return fact;
+       return fact;
     }
-
-   
+     
 }

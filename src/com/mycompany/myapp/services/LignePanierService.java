@@ -18,6 +18,7 @@ import com.mycompany.myapp.entities.Evaluations;
 import com.mycompany.myapp.entities.Lignepanier;
 import com.mycompany.myapp.entities.Product;
 import com.mycompany.myapp.gui.PanierForm;
+import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,10 +46,33 @@ public class LignePanierService {
         }
         return instance;
     }
+    
+    /*    LignePanierService es = new LignePanierService();
+        List<Lignepanier> listLigne = new ArrayList<>();
+        listLigne = es.getAlllignePanier();
+        
+      
+        
+         Button btnsup = new Button("btn");
+          for (Lignepanier e : listLigne) {
+          btnsup.addPointerPressedListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent evt) {
+                   
+              Product t=new Product(1);
+              es.addligne(t);
+              
+          }
+                
+           });
+        
+          }
+         
+         current.add(btnsup);*/
 
      public void addligne(Product t) {
             ConnectionRequest req = new ConnectionRequest();
-      String url = "http://localhost/projet_3a/symfony/web/app_dev.php/panier/api/"+t.getId()+"/addProductToPanierapi";
+      String url = Statics.BASE_URL + "/panier/"+t.getId()+"/addProductToPanierapi";
        req.setUrl(url);
       req.setPost(false);
         req.addResponseListener((NetworkEvent evt) -> {
@@ -63,7 +87,7 @@ public class LignePanierService {
      
      public void suppligne(Lignepanier l ,int idligne) {
            ConnectionRequest req = new ConnectionRequest();
-      String url = "http://127.0.0.1/projet_3a/symfony/web/app_dev.php/panier/api/"+idligne+"/deleteProductapi";
+      String url = Statics.BASE_URL + "/panier/"+idligne+"/deleteProductapi";
       req.setUrl(url);
       req.setPost(false);
         req.addResponseListener((NetworkEvent evt) -> {
@@ -77,7 +101,7 @@ public class LignePanierService {
 
      public void DecQTE(Lignepanier l ,int idligne) {
            ConnectionRequest req = new ConnectionRequest();
-      String url = "http://127.0.0.1/projet_3a/symfony/web/app_dev.php/panier/api/"+idligne+"/DecreaseProductQTEapi";
+      String url = Statics.BASE_URL + "/panier/"+idligne+"/DecreaseProductQTEapi";
       req.setUrl(url);
       req.setPost(false);
         req.addResponseListener((NetworkEvent evt) -> {
@@ -90,7 +114,7 @@ public class LignePanierService {
      
      public void IncQTE(Lignepanier l ,int idligne) {
            ConnectionRequest req = new ConnectionRequest();
-      String url = "http://127.0.0.1/projet_3a/symfony/web/app_dev.php/panier/api/"+idligne+"/increaseProductQTEapi";
+      String url = Statics.BASE_URL + "/panier/"+idligne+"/increaseProductQTEapi";
       req.setUrl(url);
       req.setPost(false);
         req.addResponseListener((NetworkEvent evt) -> {
@@ -140,7 +164,7 @@ public class LignePanierService {
  
      public ArrayList<Lignepanier> getAlllignePanier(){
       //  String url = "http://41.226.11.252:11300/tasks/";
-      String url = "http://localhost/projet_3a/symfony/web/app_dev.php/panier/api/aff";
+      String url = Statics.BASE_URL + "/panier/aff";
       req.setUrl(url);
       req.setPost(false);
       req.addResponseListener(new ActionListener<NetworkEvent>() {

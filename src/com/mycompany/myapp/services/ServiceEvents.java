@@ -29,9 +29,8 @@ public class ServiceEvents {
     public boolean resultOK;
     private ConnectionRequest req;
 
-
     public ServiceEvents() {
-      ConnectionRequest req = new ConnectionRequest();
+        ConnectionRequest req = new ConnectionRequest();
 
         req = new ConnectionRequest();
     }
@@ -44,6 +43,42 @@ public class ServiceEvents {
     }
 
     public ArrayList<Events> getAllEvents() {
+        ConnectionRequest req = new ConnectionRequest();
+
+        String url = Statics.BASE_URL + "/event/events/gone";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                events = parseEvents(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return events;
+    }
+    
+    
+    
+     public ArrayList<Events> getAllEvents2() {
+        ConnectionRequest req = new ConnectionRequest();
+
+        String url = Statics.BASE_URL + "/event/events/come";
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                events = parseEvents(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return events;
+    }
+     
+      public ArrayList<Events> getAllEvents3() {
         ConnectionRequest req = new ConnectionRequest();
 
         String url = Statics.BASE_URL + "/event/events/all";
@@ -59,6 +94,7 @@ public class ServiceEvents {
         NetworkManager.getInstance().addToQueueAndWait(req);
         return events;
     }
+
 
     public ArrayList<Events> parseEvents(String jsonText) {
         try {
@@ -78,11 +114,28 @@ public class ServiceEvents {
                 e.setPrix(((int) Double.parseDouble(obj.get("prix").toString())));
                 e.setTitre(obj.get("titre").toString());
                 e.setDescription(obj.get("description").toString());
-                e.setDate(obj.get("date").toString());
+                String dd = (obj.get("date").toString());
+
+                String dt = dd.substring(0, 10);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+                Date d = new Date();
+
+                try {
+
+                    d = formatter.parse(dt);
+
+                } catch (ParseException exp) {
+                }
+
+                System.out.println(formatter.format(d));
                 float nbrPlaces = Float.parseFloat(obj.get("nbrPlaces").toString());
                 e.setNbrPlaces((int) nbrPlaces);
                 e.setLocalisation(obj.get("localisation").toString());
                 e.setNom_image(obj.get("nomImage").toString());
+                e.setDate(d);
+
                 Map<String, Object> u = (Map) obj.get("professional");
                 e.setIdPro((int) Double.parseDouble(u.get("id").toString()));
                 //Ajouter la tâche extraite de la réponse Json à la liste
@@ -100,11 +153,13 @@ public class ServiceEvents {
         return events;
     }
 
-    public Events getEvent2(int event_id) {
+    /*public Events getEvent2(int event_id) {
+        ConnectionRequest req = new ConnectionRequest();
 
-        //  String url = Statics.BASE_URL + "/event/events/find/" + id;
-        req.setUrl("http://localhost/projet_pidev/symfony/web/app_dev.php/event/events/details/" +event_id);
-         req.setPost(false);
+        //String url = Statics.BASE_URL + "/event/events/details/" +event_id;
+        req.setUrl("http://localhost/projet_pidev/symfony/web/app_dev.php/event/events/details/" + event_id);
+        //req.setUrl(url);
+        req.setPost(false);
         req.setHttpMethod("GET");
 
         req.addResponseListener(new ActionListener<NetworkEvent>() {
@@ -118,11 +173,25 @@ public class ServiceEvents {
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
         return evnt;
+    }*/
+    
+    
+    public Events getEvent2(Events l ,int id) {
+           ConnectionRequest req = new ConnectionRequest();
+      String url = Statics.BASE_URL + "/event/events/details/"+id;
+      req.setUrl(url);
+      req.setPost(false);
+        req.addResponseListener((NetworkEvent evt) -> {
+            byte[] data = (byte[]) evt.getMetaData();
+            String s = new String(data);
+           System.out.println(data);
+          });
+       NetworkManager.getInstance().addToQueue(req);
+       return l;
     }
 
     public Events getEvent(String json) {
         Events e = new Events();
-
 
         try {
             System.out.println(json);
@@ -139,11 +208,28 @@ public class ServiceEvents {
                 e.setPrix(((int) Double.parseDouble(obj.get("prix").toString())));
                 e.setTitre(obj.get("titre").toString());
                 e.setDescription(obj.get("description").toString());
-                e.setDate(obj.get("date").toString());
+                String dd = (obj.get("date").toString());
+
+                String dt = dd.substring(0, 10);
+
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
+                Date d = new Date();
+
+                try {
+
+                    d = formatter.parse(dt);
+
+                } catch (ParseException exp) {
+                }
+
+                System.out.println(formatter.format(d));
                 float nbrPlaces = Float.parseFloat(obj.get("nbrPlaces").toString());
                 e.setNbrPlaces((int) nbrPlaces);
                 e.setLocalisation(obj.get("localisation").toString());
                 e.setNom_image(obj.get("nomImage").toString());
+                e.setDate(d);
+
                 Map<String, Object> u = (Map) obj.get("professional");
                 e.setIdPro((int) Double.parseDouble(u.get("id").toString()));
                 //Ajouter la tâche extraite de la réponse Json à la liste
@@ -155,5 +241,24 @@ public class ServiceEvents {
         return evnt;
 
     }
+    
+    
+      public ArrayList<Events> getEventsByDate(String date) {
+        ConnectionRequest req = new ConnectionRequest();
+
+        String url = Statics.BASE_URL + "/event/events/date/"+date;
+        req.setUrl(url);
+        req.setPost(false);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                events = parseEvents(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return events;
+    }
+    
 
 }
