@@ -25,6 +25,12 @@ public class Panier {
     public Panier() {
     }
 
+    public Panier(int idpan) {
+        this.idpan = idpan;
+    }
+    
+    
+
     public Panier(int idpan,int user, boolean etat, boolean archive, String datepanier, double prixtotal) {
         this.idpan = idpan;
         this.user = user;

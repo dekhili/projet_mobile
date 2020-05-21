@@ -15,7 +15,8 @@ package com.mycompany.myapp.entities;
 public class Facture {
     private int id,panier_id;
     private String adresse, numtel, datedelivraison;
-    private int etat;
+    
+    private boolean etat;
     
     
     /*-------------------------------------------------------*/
@@ -44,14 +45,14 @@ public class Facture {
 
     
   
-     public Facture(int id,String adresse,String datedelivraison,int etat) {
+     public Facture(int id,String adresse,String datedelivraison,boolean etat) {
         this.adresse = adresse;
         this.datedelivraison = datedelivraison;
         this.etat = etat;
       this.id = id;
     }
 
-    public Facture(int id,String numtel, String adresse,  String datedelivraison, int etat) {
+    public Facture(int id,String numtel, String adresse,  String datedelivraison, boolean etat) {
         this.id = id;
         this.adresse = adresse;
         this.numtel = numtel;
@@ -60,7 +61,7 @@ public class Facture {
     }
    
  
-    public Facture(int id, int panier_id,String numtel, String adresse,  String datedelivraison, int etat) {
+    public Facture(int id, int panier_id,String numtel, String adresse,  String datedelivraison, boolean etat) {
         this.id = id;
         this.panier_id = panier_id;
         this.adresse = adresse;
@@ -69,6 +70,7 @@ public class Facture {
         this.etat = etat;
     }
 
+   
 
   
     /*---------------------------------------------------------------*/ 
@@ -78,7 +80,7 @@ public class Facture {
     }
 
     public void setIdfact(int idfact) {
-        this.id = id;
+        this.id = idfact;
     }
 
     public String getAdresse() {
@@ -115,11 +117,11 @@ public class Facture {
 
     
 
-    public int getEtat() {
+    public boolean getEtat() {
         return etat;
     }
 
-    public void setEtat(int etat) {
+    public void setEtat(boolean etat) {
         this.etat = etat;
     }
 

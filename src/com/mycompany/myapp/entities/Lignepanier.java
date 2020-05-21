@@ -183,20 +183,6 @@ public class Lignepanier {
         return "Lignepanier{" + "idlp=" + idlp + ", product_id=" + product_id + ", panier_id=" + panier_id + ", quantite=" + quantite + ", nompr=" + nompr + ", descrip=" + descrip + ", image=" + image + ", prix=" + prix + ", prixTotal=" + prixTotal + '}';
     }
 
-    
-    
 
-   
-
-    
-    
-
-    
-
-    
-
-   
-
-   
     
 }

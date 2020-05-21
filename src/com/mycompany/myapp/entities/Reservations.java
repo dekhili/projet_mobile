@@ -25,10 +25,25 @@ public class Reservations {
     public Reservations(int id) {
         this.id = id;
     }
+
+    public Reservations(int quantite, double prixpaye, int event_id) {
+        this.quantite = quantite;
+        this.prixpaye = prixpaye;
+        this.event_id = event_id;
+    }
+
+    public Reservations(int id, int event_id) {
+        this.id = id;
+        this.event_id = event_id;
+    }
+    
+    
     
 
     public Reservations() {
     }
+    
+    
 
     public Reservations(int quantite, double prixpaye) {
         this.quantite = quantite;
@@ -44,6 +59,15 @@ public class Reservations {
         this.username = username;
         
     }
+
+    public Reservations(int id, int quantite, double prixpaye, int event_id) {
+        this.id = id;
+        this.quantite = quantite;
+        this.prixpaye = prixpaye;
+        this.event_id = event_id;
+    }
+    
+    
 
     public Reservations(int id,int quantite, double prixpaye, String titre) {
         this.id= id;
@@ -164,10 +188,20 @@ public class Reservations {
         return true;
     }
 
+ /*   @Override
+    public String toString() {
+        return "Reservations{"+ ", quantite=" + quantite + ", prixpaye=" + prixpaye + ", event_id=" + event_id +'}';
+    }*/
+
     @Override
     public String toString() {
-        return "Reservations{" + "quantite=" + quantite + ", prixpaye=" + prixpaye + ", titre=" + titre + ", description=" + description + '}';
+        return "Reservations{" + "id=" + id + ", quantite=" + quantite + ", prixpaye=" + prixpaye + ", event_id=" + event_id + '}';
     }
+    
+    
+
+    
+    
 
  
 

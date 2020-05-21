@@ -5,6 +5,9 @@
  */
 package com.mycompany.myapp.entities;
 
+import java.util.Date;
+
+
 
 /**
  *
@@ -15,7 +18,7 @@ public class Events {
     public int id;
     private String titre;
     private String description;
-    private String date;
+    private Date date;
     public int nbrPlaces;
     private double prix;
     private String localisation;
@@ -42,7 +45,7 @@ public class Events {
     public Events() {
     }
 
-    public Events(String titre, String description, String date, int nbrPlaces, double prix, String localisation, int idPro) {
+    public Events(String titre, String description, Date date, int nbrPlaces, double prix, String localisation, int idPro) {
         this.titre = titre;
         this.description = description;
         this.date = date;
@@ -70,7 +73,7 @@ public class Events {
     
     
 
-    public Events(int id, String titre, String description, String date, int nbrPlaces, double prix, String localisation, String nom_image) {
+    public Events(int id, String titre, String description, Date date, int nbrPlaces, double prix, String localisation, String nom_image) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -81,7 +84,7 @@ public class Events {
         this.nom_image = nom_image;
     }
 
-    public Events(String titre, String description, String date, int nbrPlaces, double prix, String localisation, int idPro, String nom_image) {
+    public Events(String titre, String description, Date date, int nbrPlaces, double prix, String localisation, int idPro, String nom_image) {
         this.titre = titre;
         this.description = description;
         this.date = date;
@@ -92,7 +95,7 @@ public class Events {
         this.nom_image = nom_image;
     }
 
-    public Events(int id, String titre, String description, String date, int nbrPlaces, double prix, String localisation, int idPro, String nom_image) {
+    public Events(int id, String titre, String description, Date date, int nbrPlaces, double prix, String localisation, int idPro, String nom_image) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -107,7 +110,7 @@ public class Events {
     
 
     
-    public Events(int id ,String titre, String description, double prix, String date, int nbrPlaces, String nom_image) {
+    public Events(int id ,String titre, String description, double prix, Date date, int nbrPlaces, String nom_image) {
         this.id = id;
         this.titre = titre;
         this.description = description;
@@ -117,7 +120,7 @@ public class Events {
         this.nom_image = nom_image;
     }
 
-    public Events(String titre, String description, String date, int nbrPlaces, double prix, String localisation, String nom_image) {
+    public Events(String titre, String description, Date date, int nbrPlaces, double prix, String localisation, String nom_image) {
         this.titre = titre;
         this.description = description;
         this.date = date;
@@ -127,7 +130,7 @@ public class Events {
         this.nom_image = nom_image;
     }
 
-    public Events(String titre, String description, String date, int nbrPlaces, double prix, String localisation) {
+    public Events(String titre, String description, Date date, int nbrPlaces, double prix, String localisation) {
         this.titre = titre;
         this.description = description;
         this.date = date;
@@ -166,13 +169,14 @@ public class Events {
         this.description = description;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
+
 
     public int getNbrPlaces() {
         return nbrPlaces;

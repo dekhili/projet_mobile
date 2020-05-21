@@ -53,6 +53,10 @@ public class Evaluations {
         this.note = note;
         this.commentaire = commentaire;
     }
+
+    public Evaluations(String commentaire) {
+        this.commentaire = commentaire;
+    }
     
     
     
