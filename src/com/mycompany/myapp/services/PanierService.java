@@ -11,6 +11,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.myapp.entities.Panier;
 import com.mycompany.myapp.utils.Statics;
 import java.io.IOException;
@@ -70,7 +71,7 @@ public class PanierService {
     
     
      public ArrayList<Panier> getAllPanier(){ 
-       String url = Statics.BASE_URL + "/panier/affP";
+       String url = Statics.BASE_URL + "/panier/affP?user=" + Statics.CurrentUser.getId();
         req.setUrl(url);
         req.setPost(false);
         System.out.print(req.getResponseData());

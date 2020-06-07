@@ -56,12 +56,6 @@ public class FactureService {
             public void actionPerformed(NetworkEvent evt) {
                 resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
                 req.removeResponseListener(this); //Supprimer cet actionListener
-                /* une fois que nous avons terminé de l'utiliser.
-                La ConnectionRequest req est unique pour tous les appels de 
-                n'importe quelle méthode du Service task, donc si on ne supprime
-                pas l'ActionListener il sera enregistré et donc éxécuté même si 
-                la réponse reçue correspond à une autre URL(get par exemple)*/
-                
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);

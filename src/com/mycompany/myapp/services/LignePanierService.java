@@ -47,44 +47,6 @@ public class LignePanierService {
         return instance;
     }
     
-    /*    LignePanierService es = new LignePanierService();
-        List<Lignepanier> listLigne = new ArrayList<>();
-        listLigne = es.getAlllignePanier();
-        
-      
-        
-         Button btnsup = new Button("btn");
-          for (Lignepanier e : listLigne) {
-          btnsup.addPointerPressedListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent evt) {
-                   
-              Product t=new Product(1);
-              es.addligne(t);
-              
-          }
-                
-           });
-        
-          }
-         
-         current.add(btnsup);*/
-
-     public void addligne(Product t) {
-            ConnectionRequest req = new ConnectionRequest();
-      String url = Statics.BASE_URL + "/panier/"+t.getId()+"/addProductToPanierapi";
-       req.setUrl(url);
-      req.setPost(false);
-        req.addResponseListener((NetworkEvent evt) -> {
-            byte[] data = (byte[]) evt.getMetaData();
-            String s = new String(data);
-         
-        });
-       
-        NetworkManager.getInstance().addToQueue(req);
-    }
-     
-     
      public void suppligne(Lignepanier l ,int idligne) {
            ConnectionRequest req = new ConnectionRequest();
       String url = Statics.BASE_URL + "/panier/"+idligne+"/deleteProductapi";
@@ -98,7 +60,7 @@ public class LignePanierService {
        
         NetworkManager.getInstance().addToQueue(req);
     }
-
+     
      public void DecQTE(Lignepanier l ,int idligne) {
            ConnectionRequest req = new ConnectionRequest();
       String url = Statics.BASE_URL + "/panier/"+idligne+"/DecreaseProductQTEapi";
@@ -110,6 +72,24 @@ public class LignePanierService {
            System.out.println(data);
         });
         NetworkManager.getInstance().addToQueue(req);
+    }
+
+     
+     public boolean  ProductQTE(Lignepanier l ,int idligne) {
+         ConnectionRequest req = new ConnectionRequest();
+      String url = Statics.BASE_URL + "/panier/"+idligne+"/Productqteapi";
+         System.out.println(url);
+       req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
     }
      
      public void IncQTE(Lignepanier l ,int idligne) {
