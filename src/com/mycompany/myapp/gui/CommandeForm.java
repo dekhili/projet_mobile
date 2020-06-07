@@ -47,7 +47,7 @@ public class CommandeForm extends Form{
         
         setTitle("Enter information");
         setLayout(BoxLayout.y());
-       setUIID("commandeform");
+       setUIID("bg1");
         //phone number
         Label num=new Label("Phone number","labelcommande");
         num.getUnselectedStyle().setFont(smallPlainSystemFontbi);

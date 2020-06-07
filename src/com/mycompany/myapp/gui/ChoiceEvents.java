@@ -73,7 +73,7 @@ public class ChoiceEvents {
         tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                StoreForm store = new StoreForm();
+                 ListeProduct store = new ListeProduct(f);
                 store.getF().show();
             }
         });

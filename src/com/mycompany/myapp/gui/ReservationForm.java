@@ -93,7 +93,7 @@ public class ReservationForm extends Form {
         tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                StoreForm store = new StoreForm();
+                 ListeProduct store = new ListeProduct(current);
                 store.getF().show();
             }
         });

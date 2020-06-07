@@ -28,6 +28,7 @@ import com.mycompany.myapp.entities.Lignepanier;
 import com.mycompany.myapp.entities.Panier;
 import com.mycompany.myapp.services.PanierService;
 import com.mycompany.myapp.services.LignePanierService;
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,27 +46,7 @@ public class PanierForm extends Form{
      // ArrayList<Lignepanier> list = new ArrayList<>();
         
          Button btnValider = new Button("Add produit");
-       
-        /* btnValider.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                Product v = new Product(1,"sac",90,"sac de chasse",50,"6666.jpg",1);
-                System.out.println(LignePanierService.getInstance().addligne(v));
-                    try {
-                        
-                        if( LignePanierService.getInstance().addligne(v))
-                            Dialog.show("Success","Connection accepted",new Command("OK"));
-                        else
-                            Dialog.show("ERROR", "Server error", new Command("OK"));
-                    } catch (NumberFormatException e) {
-                        Dialog.show("ERROR", "Status must be a number", new Command("OK"));
-                    }
-                    
-                }
-                
-           
-        });
-*/      Font smallPlainSystemFont = Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
+       Font smallPlainSystemFont = Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_SMALL);
         Font smallPlainSystemFontbi = Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_PLAIN, Font.SIZE_LARGE);
         Font smallPlainSystemFontbi1 = Font.createSystemFont(Font.FACE_SYSTEM, Font.STYLE_BOLD, Font.SIZE_LARGE);
           
@@ -113,7 +94,7 @@ public class PanierForm extends Form{
         tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                StoreForm store = new StoreForm();
+                ListeProduct store = new ListeProduct(current);
                 store.getF().show();
             }
         });
@@ -149,16 +130,13 @@ public class PanierForm extends Form{
             }
         });
         
-       
-           
-       
-            
+          
         LignePanierService es = new LignePanierService();
         List<Lignepanier> listLigne = new ArrayList<>();
         listLigne = es.getAlllignePanier();
         
         
-          Image imgUrl; 
+         
           Image imgUrl1; 
           Image imgUrlcart,imgUrlup; 
           
@@ -171,7 +149,7 @@ public class PanierForm extends Form{
                List<Panier> listp = new ArrayList<>();
                listp = ps.getAllPanier();  
             for (Panier p : listp) {
-            Label prixt = new Label("Total amount : ");
+            Label prixt = new Label("   Total amount : ");
             Label prixt1 = new Label(String.valueOf(p.getPrixtotal())+ " DT");
             prixt.getUnselectedStyle().setFont(smallPlainSystemFontbi);
             prixt1.getUnselectedStyle().setFont(smallPlainSystemFontbi1);
@@ -214,12 +192,12 @@ public class PanierForm extends Form{
           Container c1 = new Container(BoxLayout.yCenter());
            
           //image ligne panier
-           Image placeholder = Image.createImage(320,300); 
-           EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
-           imgUrl = URLImage.createToStorage(encImage, "" + e.getImage(), "http://localhost/projet_3a/symfony/web/images/" + e.getImage());
-           ImageViewer img = new ImageViewer(imgUrl);
+           Image i = Image.createImage(320,300); 
+           EncodedImage encImag = EncodedImage.createFromImage(i, false);
+        URLImage imgUr = URLImage.createToStorage(encImag, "http://localhost/projet_3a/symfony/web/images/" + e.getImage(), "http://localhost/projet_3a/symfony/web/images/" + e.getImage());
+           ImageViewer im = new ImageViewer(imgUr);
            //nom produit ligne panier
-           Label nompr = new Label("           "+e.getNompr(),"nompr");
+           Label nompr = new Label("    "+e.getNompr(),"nompr");
            nompr.getUnselectedStyle().setFont(smallPlainSystemFontbi);
            //description produit ligne panier
            Label descrip = new Label("Description :   "+e.getDescrip(),"labelpanier");
@@ -252,27 +230,21 @@ public class PanierForm extends Form{
                    }  
                 }
            });
-            
-            /*
-            Label up = new Label("add");
-            String urlImaup = "http://localhost/projet_3a/symfony/web/images/plus1.png" ;
-          EncodedImage encImagup = EncodedImage.createFromImage(theme.getImage("plus1.png"), false);
-          imgUrlup = URLImage.createToStorage(encImagup, ""+"plus1.png" , urlImaup);
-         */
-            
-             
+           
             Button btnup = new Button("    Add     ");
             btnup.setUIID("btnup");
             btnup.addPointerPressedListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent evt) {
-                    System.out.println(e.getIdlp());
+                    if(es.ProductQTE(e,e.getIdlp()));
+                    {
                    es.IncQTE(e,e.getIdlp());
                     try{         
                         Dialog.show("Increment quantity", "validation of the operation! ", new Command("ok"));
                         new PanierForm(current).show();
                     } catch (NumberFormatException e) {
                         Dialog.show("ERROR", "Status must be a number", new Command("OK"));
+                    }
                     }
                 }
            });
@@ -282,7 +254,7 @@ public class PanierForm extends Form{
           Label ligne = new Label("-------------------------------------------------------------------------------------------------------------------------------");
           
           c1.addAll(nompr,descrip,prix,qte,incdec);
-          c2.addAll(btnsup,img,c1);
+          c2.addAll(btnsup,im,c1);
           c3.add(ligne);
           
          
@@ -291,17 +263,14 @@ public class PanierForm extends Form{
             
            }
        
-     /* String urlImagecart = "http://localhost/projet_3a/symfony/web/images/cartplus.png" ;
-          EncodedImage encImagecart = EncodedImage.createFromImage(theme.getImage("cartplus.png"), false);
-          imgUrlcart = URLImage.createToStorage(encImagecart, ""+"cartplus.png" , urlImagecart);
-          Button btncom = new Button(imgUrlcart);*/
+     /* */
           Button Button1 = new Button("Order");
         Button1.setUIID("Button");
        
          Button1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                         new CommandeForm(current).show();
+                new CommandeForm(current).show();
             }
         });
          
@@ -321,23 +290,6 @@ public class PanierForm extends Form{
     
       
       
-   /*     btnValider2.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-             
-                  
-            getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, e-> previous.showBack());
-                    
-                }
-                
-                
-            });
-     
-        
-   addAll(btnValider,btnValider2);
-      SpanLabel sp = new SpanLabel();
-        sp.setText(LignePanierService.getInstance().getAlllignePanier().toString());
-        add(sp);  
-   }*/ 
+ 
 
 }

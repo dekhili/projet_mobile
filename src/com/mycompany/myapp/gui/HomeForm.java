@@ -58,7 +58,7 @@ private Resources theme;
         
         
      
-         tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+         tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_ACCOUNT_CIRCLE, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -95,7 +95,7 @@ private Resources theme;
         tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                StoreForm store = new StoreForm();
+                ListeProduct store = new ListeProduct(current);
                 store.getF().show();
             }
         });
@@ -207,7 +207,7 @@ private Resources theme;
         initGuiBuilderComponents(resourceObjectInstance);
     }
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-- DON'T EDIT BELOW THIS LINE!!!
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-- DON'T EDIT BELOW THIS LINE!!!
 
 
 // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
