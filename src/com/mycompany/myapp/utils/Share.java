@@ -10,7 +10,9 @@ import com.codename1.io.AccessToken;
 import com.codename1.share.FacebookShare;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
-import com.mycompany.myapp.gui.ShowEventsForm;
+import com.mycompany.myapp.entities.Events;
+import com.mycompany.myapp.entities.Reservations;
+import com.mycompany.myapp.gui.ShowReservationsForm;
 
 
 
@@ -22,10 +24,10 @@ public class Share {
     
     String token;
 
-    public void shareFacebook(String img,int id) {
+    public void shareFacebook(String img, Events e , Reservations r) {
 
-        FaceBookAccess.setClientId("1468741356639356");
-        FaceBookAccess.setClientSecret("4a9918ab8152c7fde7f7c43411b3c597");
+        FaceBookAccess.setClientId("2543360665976120");
+        FaceBookAccess.setClientSecret("24d8ac1ce21b70cd2b2daab0145c3f4b");
         FaceBookAccess.setRedirectURI("https://www.google.tn/");
         FaceBookAccess.setPermissions(new String[]{"publish_actions"});
 
@@ -42,13 +44,14 @@ public class Share {
                     
                 }
                 
+                
                   
                 
                 FacebookShare f = new FacebookShare();
-                ShowEventsForm sde = new ShowEventsForm(id);
+                ShowReservationsForm sde = new ShowReservationsForm(e,r);
                 f.setOriginalForm(sde.getF());
                 ShareTest st = new ShareTest(token,sde.getF());
-                st.share("j'ai participer à cet évenement","file://C:/wamp/www/projet_pidev/symfony/"+img,"test");
+                st.share("j'ai participer à cet évenement","file://C:/wamp64/www/projet_pidev/symfony/web/images/"+img,"test");
                 
                 
                 
