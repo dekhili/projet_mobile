@@ -61,6 +61,8 @@ public class ServiceReclamation {
                  t.setProduit((int) Double.parseDouble(p.get("id").toString()));
                  t.setNomproduit(p.get("nompr").toString());
                  t.setImage(p.get("image").toString());
+                                  t.setDesc(p.get("descrip").toString());
+
 
                  
                 Map<String, Object> u = (Map) obj.get("user");
@@ -99,8 +101,8 @@ public class ServiceReclamation {
         return reclamation;
     }
 
-     public boolean addReclamation(Reclamation t) {
-        String url =  "http://localhost/projet_3a/symfony/web/app_dev.php/sav/ajouterreclamationapi/"+   t.getProbleme();
+     public boolean addReclamation(Reclamation t, int user , int produit) {
+        String url =  "http://localhost/projet_3a/symfony/web/app_dev.php/sav/ajouterreclamationapi/"+   t.getProbleme() + "/" + user + "/" + produit;
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
@@ -142,7 +144,19 @@ public class ServiceReclamation {
         });
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
     }
-
+public boolean searchReclamation(Reclamation t , String probleme ) {
+        String url =  "http://localhost/projet_3a/symfony/web/app_dev.php/sav/search/"+   probleme ;
+        req.setUrl(url);
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                resultOK = req.getResponseCode() == 200; //Code HTTP 200 
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return resultOK;
+    }
     
    
     

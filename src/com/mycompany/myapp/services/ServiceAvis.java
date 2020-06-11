@@ -63,6 +63,8 @@ public class ServiceAvis {
                  t.setProduit((int) Double.parseDouble(p.get("id").toString()));
                  t.setNomproduit(p.get("nompr").toString());
                  t.setImage(p.get("image").toString());
+                 t.setDesc(p.get("descrip").toString());
+
 
                  
                 Map<String, Object> u = (Map) obj.get("user");
@@ -195,8 +197,8 @@ public class ServiceAvis {
         NetworkManager.getInstance().addToQueueAndWait(con);// Ajout de notre demande de connexion à la file d'attente du NetworkManager
     }
     
-    public boolean ajouterAvis(Avis t) {
-        String url =  "http://localhost/projet_3a/symfony/web/app_dev.php/sav/ajouteravisapi/"+   t.getRate();
+    public boolean ajouterAvis(Avis t , int user , int produit) {
+        String url =  "http://localhost/projet_3a/symfony/web/app_dev.php/sav/ajouteravisapi/"+   t.getRate() + "/" + user + "/"  + produit ;
         req.setUrl(url);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
