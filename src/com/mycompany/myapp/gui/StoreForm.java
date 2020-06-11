@@ -1,86 +1,54 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.mycompany.myapp.gui;
 
 import com.codename1.ui.Button;
+import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
-import com.codename1.ui.Label;
-import com.codename1.ui.events.ActionEvent;
-import com.codename1.ui.events.ActionListener;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.layouts.BoxLayout;
 
 /**
  *
- * @author esprit
+ * @author fedy
  */
-public class StoreForm extends Form {
+
+public class StoreForm extends HomeForm {
     
 Form current;
+
  public StoreForm() {
      
     current=this;
-        setTitle("Store");
+        current.setTitle("Store");
 
-         
-        setLayout(BoxLayout.y());
+        current.setLayout(BoxLayout.y());
         
-         current.getToolbar().addCommandToSideMenu("Home", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-                           new HomeForm().show();
-
-            }
-        });
-         
-       current.getToolbar().addCommandToSideMenu("Panier", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           PanierForm panier = new PanierForm();
-           panier.getF().show();
-            }
-        });
+         Button btnListProds = new Button("List Products",FontImage.createMaterial(FontImage.MATERIAL_LIST, "Label", 6));
+         btnListProds.addActionListener(e-> new ListProdsForm().show());
         
+          Button btnListCats = new Button("List Categories", FontImage.createMaterial(FontImage.MATERIAL_LIST, "Label", 6));
+          btnListCats.addActionListener(e-> new ListCategoryForm().show());
         
-         current.getToolbar().addCommandToSideMenu("Recruitement", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           RecruitForm recruit = new RecruitForm();
-           recruit.getF().show();
-            }
-        });
-          current.getToolbar().addCommandToSideMenu("Events", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           EventsForm events = new EventsForm();
-           events.getF().show();
-            }
-        });
-           current.getToolbar().addCommandToSideMenu("Client Services", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           SavForm sav = new SavForm();
-           sav.getF().show();
-            }
-        });
+          Button btnTri = new Button("Sort Products",FontImage.createMaterial(FontImage.MATERIAL_SORT, "Label", 6));
+          btnTri.addActionListener(e-> new SortListProdForm().show());
+        
+          Button btnMailing = new Button("Contact Administration",FontImage.createMaterial(FontImage.MATERIAL_MAIL, "Label", 6));
+          btnMailing.addActionListener(e-> new SendEmailForm().show());
           
+          addAll(btnListProds,btnTri,btnListCats,btnMailing); 
+        
+          current.setLayout(BoxLayout.y());
+          Toolbar tb = current.getToolbar();
+        
+           current.getToolbar().addCommandToLeftBar("back", null, (ev) -> {
+                HomeForm hf = new HomeForm();
+                hf.getF().show();
            
-            current.getToolbar().addCommandToSideMenu("About", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           AboutForm about = new AboutForm();
-           about.getF().show();
-            }
         });
-    
-     
  }
 
     public Form getF() {
         return current;
     }
-    
     
 }
