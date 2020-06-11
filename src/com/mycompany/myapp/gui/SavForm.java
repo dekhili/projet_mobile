@@ -17,6 +17,7 @@ import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
 import com.codename1.ui.TextField;
+import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
@@ -41,7 +42,7 @@ Form current;
 private Resources theme;
 
  public SavForm() {
-         theme = UIManager.initFirstTheme("/theme_2");
+         theme = UIManager.initFirstTheme("/theme_2_1");
 
     current=this;
         setTitle("Client Services");
@@ -49,77 +50,99 @@ private Resources theme;
          
         setLayout(BoxLayout.y());
         
-         current.getToolbar().addCommandToSideMenu("Home", null, new ActionListener() {
-             @Override
+          Toolbar tb = current.getToolbar();
+        
+         tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+
+            @Override
             public void actionPerformed(ActionEvent evt) {
-                             new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
          
-      current.getToolbar().addCommandToSideMenu("Panier", null, new ActionListener() {
-             @Override
+          tb.addMaterialCommandToOverflowMenu("Profile", FontImage.MATERIAL_ACCOUNT_CIRCLE, new ActionListener() {
+
+            @Override
             public void actionPerformed(ActionEvent evt) {
-           PanierForm panier = new PanierForm();
-           panier.getF().show();
+                new Profile().getF().show();
+
             }
         });
-         
-         
-        current.getToolbar().addCommandToSideMenu("Store", null, new ActionListener() {
-             @Override
+          
+        tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent evt) {
-           StoreForm store = new StoreForm();
-           store.getF().show();
+                new HomeForm().show();
+
+            }
+        });
+
+        tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                PanierForm panier = new PanierForm(current);
+                panier.getF().show();
+            }
+        });
+
+        tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                 ListeProduct store = new ListeProduct(current);
+                store.getF().show();
+            }
+        });
+
+        tb.addMaterialCommandToSideMenu("Recruitement", FontImage.MATERIAL_FACE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                RecruitForm recruit = new RecruitForm();
+                recruit.getF().show();
+            }
+        });
+        tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                ChoiceEvents events = new ChoiceEvents();
+                events.getF().show();
             }
         });
         
-        
-         current.getToolbar().addCommandToSideMenu("Recruitement", null, new ActionListener() {
-             @Override
+         
+
+         tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {   
+            @Override
             public void actionPerformed(ActionEvent evt) {
-           RecruitForm recruit = new RecruitForm();
-           recruit.getF().show();
-            }
-        });
-          current.getToolbar().addCommandToSideMenu("Events", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           EventsForm events = new EventsForm();
-           events.getF().show();
-            }
-        });
-           
-           
-            current.getToolbar().addCommandToSideMenu("About", null, new ActionListener() {
-             @Override
-            public void actionPerformed(ActionEvent evt) {
-           AboutForm about = new AboutForm();
-           about.getF().show();
+                AboutForm about = new AboutForm();
+                about.getF().show();
             }
         });
                
-        current.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_EXIT_TO_APP, ev->{Display.getInstance().exitApplication();});
+        
         //current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_STAR , ev->{Display.getInstance().exitApplication();});
 
         
-        setLayout(BoxLayout.yCenter());
-        Container c1 = new Container(BoxLayout.yCenter());
-        Container c2 = new Container(BoxLayout.yCenter());
+        setLayout(BoxLayout.y());
+        setUIID("bg3");
+        Container c1 = new Container(BoxLayout.y());
+        Container c2 = new Container(BoxLayout.y());
 
 
         
         Image imgUrlAvis; 
         Image imgUrlRec; 
-        Label review = new Label("Review");
+        Label review = new Label("Troubleshooting");
+        review.setUIID("avislabel");
         Label rating = new Label("Rating");
+        rating.setUIID("avislabel");
 
 
           
         
-          String urlImageRec = "http://localhost/projet_pidev/symfony/web/bundles/product1/images/sav/review.png" ;
-          EncodedImage encImageRec = EncodedImage.createFromImage(theme.getImage("review.png"), false);
-          imgUrlRec = URLImage.createToStorage(encImageRec, ""+"review.png" , urlImageRec);
+          String urlImageRec = "http://localhost/projet_3a/symfony/web/images/sav/r.png" ;
+          EncodedImage encImageRec = EncodedImage.createFromImage(theme.getImage("r.png"), false);
+          imgUrlRec = URLImage.createToStorage(encImageRec, ""+"r.png" , urlImageRec);
           Button btnReview = new Button(imgUrlRec);
           
            btnReview.addActionListener(new ActionListener() {
@@ -129,13 +152,13 @@ private Resources theme;
             review.getF().show();   
             }
         }); 
-           c1.addAll( review, btnReview);
+           c1.addAll(  btnReview);
 
 
           
-          String urlImageAvis = "http://localhost/projet_pidev/symfony/web/bundles/product1/images/sav/rating.png" ;
-          EncodedImage encImageAvis = EncodedImage.createFromImage(theme.getImage("rating.png"), false);
-          imgUrlAvis = URLImage.createToStorage(encImageAvis, ""+"rating.png" , urlImageAvis);
+          String urlImageAvis = "http://localhost/projet_3a/symfony/web/images/sav/rate.png" ;
+          EncodedImage encImageAvis = EncodedImage.createFromImage(theme.getImage("rate.png"), false);
+          imgUrlAvis = URLImage.createToStorage(encImageAvis, ""+"rate.png" , urlImageAvis);
           Button btnRating = new Button(imgUrlAvis);
           
           btnRating.addActionListener(new ActionListener() {
@@ -146,7 +169,7 @@ private Resources theme;
             }
         }); 
         
-          c2.addAll(rating, btnRating);
+          c2.addAll( btnRating);
 
 
          

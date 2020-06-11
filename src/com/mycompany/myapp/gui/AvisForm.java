@@ -29,6 +29,7 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.myapp.entities.Evaluations;
 import com.mycompany.myapp.entities.Avis;
 import com.mycompany.myapp.entities.Reclamation;
@@ -55,43 +56,30 @@ private Resources theme;
      
      theme = UIManager.initFirstTheme("/theme_2");
      current=this;
-     setTitle("Rating");
-     setLayout(BoxLayout.y());
-     current.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_ADD, new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent evt) {
-             AddAvisForm AddRate = new AddAvisForm();
-             AddRate.getF().show();
-         }
-     });
-     current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+     current.setTitle("Rating");
+     current.setLayout(BoxLayout.y());
+     
+     current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
          @Override
          public void actionPerformed(ActionEvent evt) {
              SavForm sav = new SavForm();
              sav.getF().show();
          }
      });
+     
      ServiceAvis es = new ServiceAvis();
      ArrayList<Avis> listAvis = new ArrayList<>();
      listAvis = es.getAllavis();
      for (Avis a : listAvis) {
          
          Container c1 = new Container(BoxLayout.x());
-
-         Label nompr = new Label(""+a.getNomproduit()+ " :");
+         
+         Label nompr = new Label(""+a.getNomproduit()+ " :    ");
+         nompr.setUIID("prob_titre"); 
+         
+         Label ligne = new Label("---------------------------------------------------");
+         ligne.setUIID("ligne"); 
         
-         
-         Label ligne = new Label("-----------------------------------------------------------------------------------------------");
-            
-         Button btnsupp = new Button("Delete");
-         Button btnmodif = new Button("Edit");
-         Button btnshow = new Button("show");
-
-            
-         //EncodedImage star1 = EncodedImage.createFromImage(theme.getImage("star.png"), false);
-         //ImageViewer imgstar1 = new ImageViewer(star1);
-            
-         
          
          ImageViewer img1=new ImageViewer();
          img1.setImage(theme.getImage("note.png"));
@@ -118,23 +106,26 @@ private Resources theme;
              c1.addAll(nompr, img1, img2, img3, img4);
          else if(a.getRate()==5)
              c1.addAll(nompr, img1, img2, img3, img4, img5);
-                   
+        
 
-
+         Container c2 = new Container();
          
-         c1.addPointerPressedListener(new ActionListener() {
+         
+         if(a.getUser()== MyApplication.user.getId())
+         c2.addAll(c1 , ligne);
+        c2.addPointerPressedListener(new ActionListener() {
              
              @Override
              public void actionPerformed(ActionEvent ee) {
                  Form f3=(Form) new Form(a.getNomproduit(),new BoxLayout(BoxLayout.Y_AXIS));
-                 f3.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+                 f3.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent evt) {
                          AvisForm avis = new AvisForm(current);
                          avis.getF().show();
                      }
                  });
-                  f3.getToolbar().addMaterialCommandToOverflowMenu("Delete", FontImage.MATERIAL_DELETE, new ActionListener() {
+                  f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_DELETE, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
                          if (Dialog.show("Alert", "You Want To Delet ?", "OK", "Cancel")){
@@ -144,45 +135,47 @@ private Resources theme;
                              h.getF().show();
                          }}
                  });
-                  f3.getToolbar().addMaterialCommandToOverflowMenu("Edit", FontImage.MATERIAL_EDIT, new ActionListener() {
+                  f3.getToolbar().addMaterialCommandToRightBar("", FontImage.MATERIAL_EDIT, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent ee) {
-                         f2 = new Form("Edit");
-                         f2.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+                         f2 = new Form("Edit",new BoxLayout(BoxLayout.Y_AXIS));
+
+                         f2.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
                      @Override
                      public void actionPerformed(ActionEvent evt) {
                          f3.show();
                      }
                  });
-                         setLayout(BoxLayout.yCenter());
+                         setLayout(BoxLayout.y());
                          TextField  tfpb = new TextField("","Your Problem");
-                         
+                         Container c = new Container(BoxLayout.y());
                          Slider starRank = new Slider();
-    starRank.setEditable(true);
-    starRank.setMinValue(1);
-    starRank.setMaxValue(6);
-    Font fnt = Font.createTrueTypeFont("native:MainLight", "native:MainLight").
-    derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
-    Style s = new Style(0xffff33, 0, fnt, (byte)0);
-    Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    s.setOpacity(100);
-    s.setFgColor(0);
-    Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
-    initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
-    starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
-        Label lbnote=new Label("Note :0");
-    Button btnval=new Button("valider");
-    
-    starRank.addActionListener((e)->{
-    lbnote.setText("Note :"+starRank.getProgress());
-        
-        
-      btnval.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
+                         starRank.setEditable(true);
+                         starRank.setMinValue(1);
+                         starRank.setMaxValue(6);
+                         Font fnt = Font.createTrueTypeFont("native:MainLight", "native:MainLight").
+                                 derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
+                         Style s = new Style(0xffff33, 0, fnt, (byte)0);
+                         Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+                         s.setOpacity(100);
+                         s.setFgColor(0);
+                         Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+                         initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
+                         initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
+                         initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
+                         initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
+                         starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
+                         
+                         Label lbnote=new Label("Note :0");
+                                          lbnote.setUIID("prob_titre"); 
+
+                         Button btnval=new Button("valider");
+                         
+                             lbnote.setText("Note :"+starRank.getProgress());
+                             
+                             btnval.addActionListener(new ActionListener() {
+                                 @Override
+                                 public void actionPerformed(ActionEvent evt) {
                 
                
                   
@@ -205,11 +198,14 @@ private Resources theme;
                 
             }
         });   
-        
-        });
-                       //  tfpb.setText(a.getRate());
-    f2.add(FlowLayout.encloseCenter(starRank));
-                             f2.add(btnval);
+                               //  tfpb.setText(a.getRate());
+                       
+                       Container c2 = new Container();
+         
+         
+         
+    c.addAll(FlowLayout.encloseCenter(starRank),btnval);
+                             f2.add(c);
 
 
                          f2.show();
@@ -218,24 +214,35 @@ private Resources theme;
                  });
                  
                  
-                 Label nompr = new Label("Product Name : "+a.getNomproduit());
-                 Label nomuser = new Label("Username : "+a.getNomuser());
+                 
+                 Label prod_titre = new Label("Product Name :");
+                 prod_titre.setUIID("prob_titre"); 
+                 
+                 Label prod = new Label(a.getNomproduit());
+                 prod.setUIID("prob_nom"); 
+                 
+                 Label desc_titre = new Label("Description :");
+                 desc_titre.setUIID("prob_titre"); 
+                 
+                 Label desc = new Label(a.getDesc());
+                 desc.setUIID("prob_nom");
+                 
+                 
                  
                  Image imgUrl; 
-                 Image placeholder = Image.createImage(140, 100); 
+                 Image placeholder = Image.createImage(600, 550); 
                  EncodedImage encImage = EncodedImage.createFromImage(placeholder, false);
                  imgUrl = URLImage.createToStorage(encImage, "" + a.getImage(), "http://localhost/projet_3a/symfony/web/images/" + a.getImage());
                  ImageViewer img = new ImageViewer(imgUrl);
-                 Container cimg = new Container(BoxLayout.yCenter());cimg.add(img);
-                 
-                 Label ligne = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne1 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne2 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne3 = new Label("-----------------------------------------------------------------------------------------------");
-                 Label ligne4 = new Label("-----------------------------------------------------------------------------------------------");
+                 Container cimg = new Container(BoxLayout.y());
+                 cimg.add(img);
+                          cimg.setUIID("image");
+
                  
                  
-                 Container c2 = new Container(BoxLayout.xCenter());
+                 
+                 
+                 Container c2 = new Container(BoxLayout.x());
                  
                  ImageViewer img1=new ImageViewer();
                  img1.setImage(theme.getImage("note.png"));
@@ -267,15 +274,17 @@ private Resources theme;
                  Button b = new Button("Edit");
                  Button d = new Button("Delet");
                  
-                 
-                 f3.addAll( cimg, nompr, ligne1, nomuser, ligne2, c2, ligne3);
+                 Container cinfo = new Container(BoxLayout.y());
+         cinfo.addAll( prod_titre, prod, desc_titre, desc);
+                 f3.addAll( cimg, cinfo, c2);
                  f3.show();
                 
    
                  ;}
          });
          
-         current.addAll(  c1, ligne);
+
+         current.add(c2 );
          
      }
  }

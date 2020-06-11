@@ -33,6 +33,7 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.myapp.entities.Avis;
 import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.services.ServiceAvis;
@@ -54,9 +55,10 @@ private Resources theme;
      
     current=this;
         setTitle("New Rating");
-        setLayout(BoxLayout.yCenter());
+        setLayout(BoxLayout.y());
+       /* setUIID("panierform");*/
 
-         current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+         current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
            AvisForm avis = new AvisForm(current);
@@ -233,6 +235,7 @@ AvisForm h=new AvisForm(current);
     initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
     initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
     starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
+
     
     
     Label lbnote=new Label("Note :0");
@@ -250,7 +253,7 @@ AvisForm h=new AvisForm(current);
                   
                         Avis t = new Avis(starRank.getProgress());
 
-                        if( ServiceAvis.getInstance().ajouterAvis(t))
+                        if( ServiceAvis.getInstance().ajouterAvis(t,  MyApplication.user.getId(), t.getProduit()))
                             
                             Dialog.show("Success"," you rated : "+starRank.getProgress(), new Command("OK"));
 

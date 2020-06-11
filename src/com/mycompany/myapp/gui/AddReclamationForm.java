@@ -21,6 +21,9 @@ import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
+import com.codename1.ui.plaf.UIManager;
+import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.myapp.entities.Evaluations;
 import com.mycompany.myapp.entities.Reclamation;
 import com.mycompany.myapp.services.EvaluationService;
@@ -34,19 +37,23 @@ import java.util.ArrayList;
  */
 public class AddReclamationForm extends Form{
     Form current;
+    private Resources theme;
  public AddReclamationForm (){
      
     current=this;
-        setTitle("New Review");
-        setLayout(BoxLayout.yCenter());
+    theme = UIManager.initFirstTheme("/theme_2");
+        setTitle("New Troubleshooting");
+        /*setUIID("bg9");*/
+        setLayout(BoxLayout.y());
       
-         current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+         current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
            ReclamationForm reclamation = new ReclamationForm(current);
            reclamation.getF().show();
             }
         });
+        
         TextField tfp = new TextField("","Your Problem ....");
         Button btnValider = new Button("Add ");
         
@@ -59,7 +66,7 @@ public class AddReclamationForm extends Form{
                 {
                   
                         Reclamation t = new Reclamation(tfp.getText());
-                        if( ServiceReclamation.getInstance().addReclamation(t))
+                        if( ServiceReclamation.getInstance().addReclamation(t , MyApplication.user.getId(), t.getProduit()))
                             
                             Dialog.show("Success"," Your problem : "+tfp.getText()+" Was successfully added ", new Command("OK"));
 
