@@ -18,6 +18,8 @@ public class Reclamation {
     private String probleme;
     private String nomproduit;
     private String image;
+    private String desc;
+
 
     private String nomuser;
 
@@ -32,21 +34,25 @@ public class Reclamation {
     }
     
     
-    public Reclamation(int id, int produit, String probleme, String nomproduit,String image,  String etat) {
+    public Reclamation(int id, int produit, String probleme, String nomproduit,String image,  String etat, String desc) {
         this.id = id;
         this.produit = produit;
         this.probleme = probleme;
         this.etat=etat;
         this.nomproduit = nomproduit;
         this.image = image;
+                this.image = desc;
+
 
     }
 
-    public Reclamation(int produit, String probleme, String nomproduit, String image ) {
+    public Reclamation(int produit, String probleme, String nomproduit, String image, String desc ) {
         this.produit = produit;
         this.probleme = probleme;
         this.nomproduit = nomproduit;
         this.image = image;
+                        this.image = desc;
+
 
     }
 
@@ -57,7 +63,7 @@ public class Reclamation {
 
     }
     
-    public Reclamation(int id, int produit, int user, String probleme, String nomproduit, String nomuser, String etat, String image) {
+    public Reclamation(int id, int produit, int user, String probleme, String nomproduit, String nomuser, String etat, String image, String desc ) {
         this.id = id;
         this.produit = produit;
         this.user = user;
@@ -66,6 +72,8 @@ public class Reclamation {
         this.nomuser = nomuser;
         this.etat = etat;
         this.image = image;
+                        this.image = desc;
+
 
     }
     
@@ -155,6 +163,14 @@ public class Reclamation {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
    

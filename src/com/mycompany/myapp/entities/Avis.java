@@ -18,14 +18,18 @@ public class Avis {
     private String image;
     private String nomuser;
     private int rate;
+        private String desc;
 
-    public Avis(int id, int produit, int user, String nomproduit, int rate, String image) {
+
+    public Avis(int id, int produit, int user, String nomproduit, int rate, String image, String desc) {
         this.id = id;
         this.produit = produit;
         this.user = user;
         this.nomproduit = nomproduit;
         this.rate = rate;
         this.image = image;
+                        this.desc = desc;
+
 
     }
     
@@ -39,7 +43,7 @@ public class Avis {
         this.rate = rate;
     }
 
-    public Avis(int id, int produit, int user, String nomproduit, String nomuser, int rate,String image ) {
+    public Avis(int id, int produit, int user, String nomproduit, String nomuser, int rate,String image, String desc ) {
         this.id = id;
         this.produit = produit;
         this.user = user;
@@ -47,6 +51,8 @@ public class Avis {
         this.nomuser = nomuser;
         this.rate = rate;
         this.image = image;
+                        this.desc = desc;
+
 
     }
 
@@ -59,12 +65,14 @@ public class Avis {
     
     
 
-    public Avis(int produit, int user, String rate, String nomproduit, String nomuser) {
+    public Avis(int produit, int user, String rate, String nomproduit, String nomuser , String desc) {
         this.produit = produit;
         this.user = user;
         this.note = rate;
         this.nomproduit = nomproduit;
         this.nomuser = nomuser;
+                this.desc = desc;
+
     }
 
     public Avis(int id, int produit, int user, String note) {
@@ -148,6 +156,14 @@ public class Avis {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
     
 
