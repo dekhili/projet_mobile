@@ -1,11 +1,11 @@
 
 package com.mycompany.myapp.entities;
 
-
 /**
  *
  * @author MONDHER
  */
+
 public class Product {
     private int id;
     private String nompr;
@@ -14,17 +14,11 @@ public class Product {
     private float prix;
     private String image;
     private int idCategory;
+    private String namecat;
     private String barcode;
-    
-  
 
     public Product() {
     }
-
-    public Product(int id) {
-        this.id = id;
-    }
-    
     
     public Product(int id, String nompr, String descrip, float prix) {
         this.id = id;
@@ -33,31 +27,36 @@ public class Product {
         this.prix = prix;
     }
 
-   
+    public Product(String nompr, int quantity, String descrip, float prix, String image, int idCategory, String barcode) {
+        this.nompr = nompr;
+        this.quantity = quantity;
+        this.descrip = descrip;
+        this.prix = prix;
+        this.image = image;
+        this.idCategory = idCategory;
+        this.barcode = barcode;
+    }
 
-    public Product(int id, String nompr, int quantity, String descrip, float prix, String image,int idCategory) {
+    public Product(int id, String nompr, int quantity, String descrip, float prix, String image,String namecat) {
         this.id = id;
         this.nompr = nompr;
         this.quantity = quantity;
         this.descrip = descrip;
         this.prix = prix;
         this.image = image;
-        this.idCategory=idCategory;
-       
+        this.namecat = namecat;
     }
 
-   public Product(int id, String nompr, int quantity, String descrip, float prix, String image) {
+    public Product(int id, String nompr, int quantity, String descrip, float prix, String image, String namecat, String barcode) {
         this.id = id;
         this.nompr = nompr;
         this.quantity = quantity;
         this.descrip = descrip;
         this.prix = prix;
         this.image = image;
-        
-       
+        this.namecat = namecat;
+        this.barcode = barcode;
     }
-    
-    
     
        public Product(int id, String nompr, float prix) {
         this.id = id;
@@ -68,6 +67,14 @@ public class Product {
     public Product(int id, String nompr) {
         this.id = id;
         this.nompr = nompr;
+    }
+
+    public Product(String nompr, int quantity, String descrip, float prix) {
+        this.nompr = nompr;
+        this.quantity = quantity;
+        this.descrip = descrip;
+        this.prix = prix;
+        
     }
     
 
@@ -91,13 +98,17 @@ public class Product {
         return image;
     }
     
-    
-
     public void setImage(String image) {
         this.image = image;
     }
 
-   
+    public String getNamecat() {
+        return namecat;
+    }
+
+    public void setNamecat(String namecat) {
+        this.namecat = namecat;
+    }
 
     public int getId() {
         return id;
@@ -141,21 +152,14 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product{" + "id=" + id + ", nompr=" + nompr + ", quantity=" + quantity + ", descrip=" + descrip + ", prix=" + prix + ", image=" + image + ", idCategory=" + idCategory + ", barcode=" + barcode + '}';
+        return "Product{" + "id=" + id + ", nompr=" + nompr + ", quantity=" + quantity + ", descrip=" + descrip + ", prix=" + prix + ", image=" + image + ", idCategory=" + idCategory +  '}';
     }
     
-    
-    
-    
-
-   
      public String toString(double prix) {
          String ch;
         return ch = toString(prix);
                 }
     
-    
- 
     @Override
     public int hashCode() {
         int hash = 7;
@@ -180,9 +184,4 @@ public class Product {
         }
         return true;
     }
-
-   
-
-   
-      
 }
