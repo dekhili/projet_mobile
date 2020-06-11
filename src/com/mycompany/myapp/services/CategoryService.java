@@ -7,8 +7,7 @@ import com.codename1.io.JSONParser;
 import com.codename1.io.NetworkEvent;
 import com.codename1.io.NetworkManager;
 import com.codename1.ui.events.ActionListener;
-import com.mycompany.myapp.entities.Product;
-import com.mycompany.myapp.utils.Statics;
+import com.mycompany.myapp.entities.Category;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,52 +15,30 @@ import java.util.Map;
 
 /**
  *
- * @author cyrine
+ * @author MONDHER
  */
 
-public class ProductService {
+public class CategoryService {
     
-    public ArrayList<Product> products;
-    private ConnectionRequest connectionRequest;
-    public static ProductService instance=null;
+    public ArrayList<Category> cat;
+    public static CategoryService instance=null;
     public boolean resultOK;
     private ConnectionRequest req;
     
-    public ProductService() {
+    public CategoryService() {
          req = new ConnectionRequest();
     }
     
-     public static ProductService getInstance() {
+     public static CategoryService getInstance() {
         if (instance == null) {
-            instance = new ProductService();
+            instance = new CategoryService();
         }
         return instance;
     }
      
-     public boolean addProds(Product p) {
-        String url = Statics.BASE_URL + "/product/prods/new" + "?nompr=" + p.getNompr() +"&quantity=" + p.getQuantity()  +"&Descrip=" + p.getDescrip() +"&prix=" + p.getPrix() +"&image=" + p.getImage() + "&idCategory=" + p.getIdCategory()  +"&barcode=" + p.getBarcode();
-        req.setUrl(url);
-        req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                resultOK = req.getResponseCode() == 200; //Code HTTP 200 OK
-                req.removeResponseListener(this); //Supprimer cet actionListener
-                /* une fois que nous avons terminé de l'utiliser.
-                La ConnectionRequest req est unique pour tous les appels de 
-                n'importe quelle méthode du Service event, donc si on ne supprime
-                pas l'ActionListener il sera enregistré et donc éxécuté même si 
-                la réponse reçue correspond à une autre URL(get par exemple)*/
-                
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return resultOK;
-    }
- 
-       public ArrayList<Product> parseProds(String jsonText){
+       public ArrayList<Category> parseCat(String jsonText){
         try {
-            products=new ArrayList<>();
+            cat=new ArrayList<>();
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
 
             /*
@@ -95,19 +72,13 @@ public class ProductService {
             //Parcourir la liste des tâches Json
             for(Map<String,Object> obj : list){
                 //Création des tâches et récupération de leurs données
-                Product p = new Product();
+                Category c = new Category();
                 float id = Float.parseFloat(obj.get("id").toString());
-                p.setId((int)id);
-                p.setNompr(obj.get("nompr").toString());
-                float quantity = Float.parseFloat(obj.get("quantity").toString());
-                p.setQuantity((int)quantity);
-                p.setDescrip(obj.get("descrip").toString());
-                p.setPrix(((int)Double.parseDouble(obj.get("prix").toString())));
-                p.setImage(obj.get("image").toString());
-                //p.setIdCategory(obj.get("idCategory").toString());
-           
+                c.setId((int)id);
+                c.setNomcat(obj.get("nomcat").toString());
+                c.setSouscat(obj.get("souscat").toString());
                 //Ajouter la tâche extraite de la réponse Json à la liste
-                products.add(p);
+                cat.add(c);
             }
                
         } catch (IOException ex) {
@@ -118,43 +89,22 @@ public class ProductService {
         de la base de données à travers un service web
         
         */
-       return products;
+       return cat;
     }
     
-    public ArrayList<Product> getAllProds(){
-        ConnectionRequest req = new ConnectionRequest();
-
-        String url = Statics.BASE_URL + "/product/prods/all";
+    public ArrayList<Category> getAllCats(){
+        String url ="http://localhost/huntkingdom/web/app_dev.php/product/cat/all";
         req.setUrl(url);
         req.setPost(false);
         req.addResponseListener(new ActionListener<NetworkEvent>() {
             @Override
             public void actionPerformed(NetworkEvent evt) {
-                products = parseProds(new String(req.getResponseData()));
+                cat = parseCat(new String(req.getResponseData()));
                 req.removeResponseListener(this);
             }
         });
         NetworkManager.getInstance().addToQueueAndWait(req);
-        return products;
+        return cat;
     }
     
-     public ArrayList<Product> getSortedProds(){
-        ConnectionRequest req = new ConnectionRequest();
-
-        String url = Statics.BASE_URL + "/product/prods/sorted";
-        req.setUrl(url);
-        req.setPost(false);
-        req.addResponseListener(new ActionListener<NetworkEvent>() {
-            @Override
-            public void actionPerformed(NetworkEvent evt) {
-                products = parseProds(new String(req.getResponseData()));
-                req.removeResponseListener(this);
-            }
-        });
-        NetworkManager.getInstance().addToQueueAndWait(req);
-        return products;
-    }
-   
-    }
-     
-      
+}
