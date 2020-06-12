@@ -2,7 +2,9 @@
 package com.mycompany.myapp.gui;
 
 import com.codename1.ui.Button;
+import com.codename1.ui.Command;
 import com.codename1.ui.Container;
+import com.codename1.ui.Dialog;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.TextField;
@@ -93,7 +95,8 @@ public class SendEmailForm extends HomeForm {
                    
                    //Send
                    email.send();
-            
+                   Dialog.show("Confirm","Email sent Successfully to the Administration" , new Command("OK"));
+                   
                } catch (MessagingException ex) {
                   System.out.println(ex);
                } catch (UnsupportedEncodingException ex) {
