@@ -2,12 +2,14 @@
 package com.mycompany.myapp.gui;
 
 import com.codename1.components.ImageViewer;
+import com.codename1.ui.Button;
 import com.codename1.ui.Container;
 import com.codename1.ui.EncodedImage;
 import com.codename1.ui.FontImage;
 import com.codename1.ui.Form;
 import com.codename1.ui.Image;
 import com.codename1.ui.Label;
+import com.codename1.ui.TextField;
 import com.codename1.ui.Toolbar;
 import com.codename1.ui.URLImage;
 import com.codename1.ui.events.ActionEvent;
@@ -47,11 +49,32 @@ public class SortListProdForm extends HomeForm {
       current.getToolbar().addCommandToLeftBar("back", null, (ev) -> {
                 HomeForm hf = new StoreForm();
                 hf.getF().show();
-           
         });
-           
-        ProductService ps = new ProductService();
-        ArrayList<Product> listProds = new ArrayList<>();
+      
+        //Filtrage avec Prix
+        Container c8 = new Container(BoxLayout.x());
+        final FontImage pr = FontImage.createMaterial(FontImage.MATERIAL_FILTER,"Label", 6);
+        c8.add(pr);
+        c8.add(new Label("FILTER LIST BY PRICE :"));
+        Container c9 = new Container(BoxLayout.y());
+        TextField Min_Price = new TextField("","Min Price");
+        TextField Max_Price = new TextField("","Max Price");
+        Button filterBtn = new Button("sort");
+        filterBtn.setUIID("ButtonSearch");
+        filterBtn.addActionListener((e) -> {
+            String a = Min_Price.getText();
+            String b = Max_Price.getText();
+            new FilterByPriceForm(f,a,b).show();
+        });
+        Container c10 = new Container(BoxLayout.y());
+        c9.add(Min_Price);
+        c9.add(Max_Price);
+        c9.add(filterBtn);
+        c10.addAll(c8,c9);
+        f.add(c10);
+       
+      ProductService ps = new ProductService();
+      ArrayList<Product> listProds = new ArrayList<>();
         listProds = ps.getSortedProds();
      
         for (Product p : listProds) {
@@ -72,7 +95,6 @@ public class SortListProdForm extends HomeForm {
         ImageViewer img1 = new ImageViewer(imgUrl);
         c1.add(img1);
 
-        
         //Quantite
         Container c2 = new Container(BoxLayout.x());
         final FontImage qt = FontImage.createMaterial(FontImage.MATERIAL_STORE, "Label", 6);
@@ -82,7 +104,6 @@ public class SortListProdForm extends HomeForm {
         String aux = desc.toString(desc);
         c2.add(new Label(aux));
 
-            
         //Description
         Container c3 = new Container(BoxLayout.x());
         final FontImage des = FontImage.createMaterial(FontImage.MATERIAL_DESCRIPTION, "Label", 6);
@@ -90,7 +111,6 @@ public class SortListProdForm extends HomeForm {
         c3.add(new Label("Description : "));
         c3.add(new Label(p.getDescrip()));
         
-
         //PRIX
         Container c6 = new Container(BoxLayout.x());
         final FontImage prx = FontImage.createMaterial(FontImage.MATERIAL_ATTACH_MONEY, "Label", 6);
