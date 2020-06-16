@@ -80,6 +80,26 @@ public class searchProdService {
         return prods;
      }
      
+     public ArrayList<Product> getProdsByPrice(String p1 , String p2) {
+        
+        ConnectionRequest req = new ConnectionRequest();
+
+        String url = Statics.BASE_URL + "/product/prods/filterPrice/"+p1+"/"+p2;
+        req.setUrl(url);
+        req.setPost(false);
+        req.setHttpMethod("GET");
+
+        req.addResponseListener(new ActionListener<NetworkEvent>() {
+            @Override
+            public void actionPerformed(NetworkEvent evt) {
+                prods = parseProds(new String(req.getResponseData()));
+                req.removeResponseListener(this);
+            }
+        });
+        NetworkManager.getInstance().addToQueueAndWait(req);
+        return prods;
+     }
+      
     public ArrayList<Product> parseProds(String jsonText) {
         try { prods = new ArrayList<>();
             JSONParser j = new JSONParser();// Instanciation d'un objet JSONParser permettant le parsing du résultat json
