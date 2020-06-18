@@ -24,6 +24,7 @@ import com.codename1.ui.events.ActionEvent;
 import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Events;
+import com.mycompany.myapp.services.LocalNotificationTest;
 import com.mycompany.myapp.services.ServiceEvents;
 //import com.mycompany.Service.UserEventService;
 
@@ -67,37 +68,33 @@ public class EventDetailsForm {
             }
         });
 
-        tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
+          tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 new HomeForm().show();
 
             }
         });
-
-        tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
+        
+          tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                PanierForm panier = new PanierForm();
-                panier.getF().show();
-            }
-        });
-
-        tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                 ListeProduct store = new ListeProduct(f);
+                StoreForm store = new StoreForm();
                 store.getF().show();
             }
         });
 
-        tb.addMaterialCommandToSideMenu("Recruitement", FontImage.MATERIAL_FACE, new ActionListener() {
+        tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                RecruitForm recruit = new RecruitForm();
-                recruit.getF().show();
+                PanierForm panier = new PanierForm(f);
+                panier.getF().show();
             }
         });
+
+       
+
+       
         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -105,16 +102,33 @@ public class EventDetailsForm {
                 events.getF().show();
             }
         });
-
-        tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+        
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
                 sav.getF().show();
             }
         });
+         
+         
+           tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_COLLECTIONS, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                GalleryForm about = new GalleryForm();
+                about.getF().show();
+            }
+        });
+        
+                
+         tb.addMaterialCommandToSideMenu("Get Notified", FontImage.MATERIAL_ADD_ALERT, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              new   LocalNotificationTest().start();
+            }
+        });
 
-        tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {   
             @Override
             public void actionPerformed(ActionEvent evt) {
                 AboutForm about = new AboutForm();

@@ -30,18 +30,22 @@ import com.codename1.ui.plaf.Border;
 import com.codename1.ui.plaf.Style;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.MyApplication;
 import com.mycompany.myapp.entities.Avis;
 import com.mycompany.myapp.entities.Events;
 import com.mycompany.myapp.entities.Evaluations;
 import com.mycompany.myapp.services.EvaluationService;
+import com.mycompany.myapp.services.LocalNotificationTest;
 import com.mycompany.myapp.services.ServiceAvis;
 import com.mycompany.myapp.services.ServiceEvents;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author fedy
  */
-public class EvaluationForm  extends Form {
+public class EvaluationForm extends Form {
 
     Form current;
     Form f;
@@ -52,16 +56,16 @@ public class EvaluationForm  extends Form {
     Events e = new Events(event_id);
 
     public EvaluationForm(Events events) {
-            theme = UIManager.initFirstTheme("/theme_2");
-       Container c = new Container(BoxLayout.y());
+        theme = UIManager.initFirstTheme("/theme_2");
+        Container c = new Container(BoxLayout.y());
 
         //  this.event_id = id;
-        current = new Form("Evaluations  ",new FlowLayout(CENTER, CENTER));
-        
+        current = new Form("Evaluations  ", new FlowLayout(CENTER, CENTER));
+
         current.setUIID("panierform");
         current.setLayout(BoxLayout.yCenter());
         Toolbar tb = current.getToolbar();
-          tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+        tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -69,8 +73,8 @@ public class EvaluationForm  extends Form {
 
             }
         });
-         
-          tb.addMaterialCommandToOverflowMenu("Profile", FontImage.MATERIAL_ACCOUNT_CIRCLE, new ActionListener() {
+
+        tb.addMaterialCommandToOverflowMenu("Profile", FontImage.MATERIAL_ACCOUNT_CIRCLE, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -78,12 +82,20 @@ public class EvaluationForm  extends Form {
 
             }
         });
-          
-        tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
+
+         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 new HomeForm().show();
 
+            }
+        });
+        
+          tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                StoreForm store = new StoreForm();
+                store.getF().show();
             }
         });
 
@@ -95,21 +107,9 @@ public class EvaluationForm  extends Form {
             }
         });
 
-        tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                 ListeProduct store = new ListeProduct(current);
-                store.getF().show();
-            }
-        });
+       
 
-        tb.addMaterialCommandToSideMenu("Recruitement", FontImage.MATERIAL_FACE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                RecruitForm recruit = new RecruitForm();
-                recruit.getF().show();
-            }
-        });
+       
         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -125,6 +125,23 @@ public class EvaluationForm  extends Form {
                 sav.getF().show();
             }
         });
+         
+         
+           tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_COLLECTIONS, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                GalleryForm about = new GalleryForm();
+                about.getF().show();
+            }
+        });
+        
+                
+         tb.addMaterialCommandToSideMenu("Get Notified", FontImage.MATERIAL_ADD_ALERT, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              new   LocalNotificationTest().start();
+            }
+        });
 
          tb.addMaterialCommandToSideMenu("About", FontImage.MATERIAL_INFO, new ActionListener() {   
             @Override
@@ -134,15 +151,14 @@ public class EvaluationForm  extends Form {
             }
         });
 
-        
-           current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
-         @Override
-         public void actionPerformed(ActionEvent evt) {
-              EventsForm1 hf = new EventsForm1();
-            hf.getF().show();
-         }
-     });
-       
+        current.getToolbar().addMaterialCommandToLeftBar("", FontImage.MATERIAL_ARROW_BACK_IOS, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                EventsForm1 hf = new EventsForm1();
+                hf.getF().show();
+            }
+        });
+
         setLayout(BoxLayout.y());
 
         ServiceEvents se = new ServiceEvents();
@@ -151,8 +167,8 @@ public class EvaluationForm  extends Form {
         final FontImage adr = FontImage.createMaterial(FontImage.MATERIAL_ROOM, "Label", 6);
         c3.add(adr);
         //e = se.getEvent2(event_id);
-        c3.add(new Label("Titre : ","calandarfont"));
-        c3.add(new Label(events.getTitre(),"calandarfont"));
+        c3.add(new Label("Titre : ", "calandarfont"));
+        c3.add(new Label(events.getTitre(), "calandarfont"));
         current.add(c3);
 
         Container c0 = new Container(BoxLayout.y());
@@ -163,12 +179,11 @@ public class EvaluationForm  extends Form {
         ImageViewer img1 = new ImageViewer(imgUrl);
 
         c0.add(img1);
-        
 
         TextField tfnote = new TextField("", "note");
         TextField tfcmnt = new TextField("", "comment");
         Button btnValider = new Button(" ");
-         btnValider.setUIID("ButtonNew");
+        btnValider.setUIID("ButtonNew");
 
         /*btnValider.addPointerPressedListener((ActionListener) new ActionListener() {
             @Override
@@ -201,81 +216,70 @@ public class EvaluationForm  extends Form {
 
             }
         });*/
-        
         Slider starRank = new Slider();
-       
-    starRank.setEditable(true);
-    starRank.setMinValue(1);
-    starRank.setMaxValue(6);
-    Font fnt = Font.createTrueTypeFont("native:MainLight", "native:MainLight").
-    derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
-    Style s = new Style(0xffff33, 0, fnt, (byte)0);
-    Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    s.setOpacity(100);
-    s.setFgColor(0);
-    Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
-    initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
-    initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
-    initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
-    starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
-    
-   Label note=new Label("Note : ","calandarfont");
-    Label lbnote=new Label("Note : ","calandarfont");
-    Button btnval = new Button(" ");
+
+        starRank.setEditable(true);
+        starRank.setMinValue(1);
+        starRank.setMaxValue(6);
+        Font fnt = Font.createTrueTypeFont("native:MainLight", "native:MainLight").
+                derive(Display.getInstance().convertToPixels(5, true), Font.STYLE_PLAIN);
+        Style s = new Style(0xffff33, 0, fnt, (byte) 0);
+        Image fullStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+        s.setOpacity(100);
+        s.setFgColor(0);
+        Image emptyStar = FontImage.createMaterial(FontImage.MATERIAL_STAR, s).toImage();
+        initStarRankStyle(starRank.getSliderEmptySelectedStyle(), emptyStar);
+        initStarRankStyle(starRank.getSliderEmptyUnselectedStyle(), emptyStar);
+        initStarRankStyle(starRank.getSliderFullSelectedStyle(), fullStar);
+        initStarRankStyle(starRank.getSliderFullUnselectedStyle(), fullStar);
+        starRank.setPreferredSize(new Dimension(fullStar.getWidth() * 5, fullStar.getHeight()));
+
+        Label note = new Label("Note : ", "calandarfont");
+        Label lbnote = new Label("Note : ", "calandarfont");
+        Button btnval = new Button(" ");
         btnval.setUIID("ButtonNew");
-    
-    starRank.addActionListener((e)->{
-    lbnote.setText("Note :"+starRank.getProgress());
-        
-        
-      btnval.addActionListener(new ActionListener() {
+
+        btnval.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                
-               
+
+                Evaluations t = new Evaluations(starRank.getProgress(), tfcmnt.getText());
+
+                EvaluationService uvs = new EvaluationService();
+                List<Evaluations> listUV = new ArrayList<>();
+                listUV = uvs.FindByUserID(MyApplication.user.getId(),events.getId());
+                if (!listUV.toString().equals("[]")) {
                   
-                        Evaluations t = new Evaluations(starRank.getProgress(),tfcmnt.getText() );
-
-                        if( EvaluationService.getInstance().addEvaluation(t, events.getId()))
-                            
-                            Dialog.show("Success"," you rated : "+starRank.getProgress(), new Command("OK"));
-
-                        else
-                            Dialog.show("ERROR", "Server error", new Command("OK"));
-                        
-                    new AvisForm(current).show();
-
+                            Dialog.show("ERROR", "Already rated", new Command("OK"));
+                        } else {
+                            if (EvaluationService.getInstance().addEvaluation(t, events.getId(), MyApplication.user.getId())) {
+                                Dialog.show("Success", " you rated : " + starRank.getProgress(), new Command("OK"));
+                                ShowEvaluationForm ef = new ShowEvaluationForm(events, t);
+                                ef.show();
+                            } else {
+                                Dialog.show("ERROR", "Server error", new Command("OK"));
+                            }
+                        }
                     
-                    
-                    
-                 ShowEvaluationForm ef = new ShowEvaluationForm(events,t);
-                            ef.show();         
-                
-                
-            }
-        });   
-        
+
+                }
+
+            
         });
-    
-   
-   
-    c.addAll(FlowLayout.encloseCenter(starRank),btnval);
-    
-    current.addAll(tfcmnt,note,c);
-    
-        
-        
+
+        c.addAll(FlowLayout.encloseCenter(starRank), btnval);
+
+        current.addAll(c0,tfcmnt, note, c);
+
     }
-private void initStarRankStyle(Style s, Image star) {
-    s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
-    s.setBorder(Border.createEmpty());
-    s.setBgImage(star);
-    s.setBgTransparency(0);
-}     
 
+    private void initStarRankStyle(Style s, Image star) {
+        s.setBackgroundType(Style.BACKGROUND_IMAGE_TILE_BOTH);
+        s.setBorder(Border.createEmpty());
+        s.setBgImage(star);
+        s.setBgTransparency(0);
+    }
 
-    
     public Form getF() {
         return current;
     }

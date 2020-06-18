@@ -22,6 +22,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.mycompany.myapp.entities.Events;
 import com.mycompany.myapp.entities.Reservations;
+import com.mycompany.myapp.services.LocalNotificationTest;
 import com.mycompany.myapp.services.ServiceReservation;
 import com.mycompany.myapp.utils.Share;
 
@@ -54,11 +55,11 @@ Form current;
        current.setLayout(BoxLayout.y());
        current.setUIID("bg1");
         Toolbar tb = current.getToolbar();
-           tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
+                   tb.addMaterialCommandToOverflowMenu("Logout", FontImage.MATERIAL_INPUT, new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new HomeForm().show();
+                new SignInForm().show();
 
             }
         });
@@ -67,11 +68,13 @@ Form current;
 
             @Override
             public void actionPerformed(ActionEvent evt) {
-                new EventsForm1().getF().show();
+                new Profile().getF().show();
 
             }
         });
           
+         
+           
         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -79,30 +82,26 @@ Form current;
 
             }
         });
-
-        tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
+        
+          tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                PanierForm panier = new PanierForm();
-                panier.getF().show();
-            }
-        });
-
-        tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                 ListeProduct store = new ListeProduct(current);
+                StoreForm store = new StoreForm();
                 store.getF().show();
             }
         });
 
-        tb.addMaterialCommandToSideMenu("Recruitement", FontImage.MATERIAL_FACE, new ActionListener() {
+        tb.addMaterialCommandToSideMenu("Panier", FontImage.MATERIAL_LOCAL_GROCERY_STORE, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
-                RecruitForm recruit = new RecruitForm();
-                recruit.getF().show();
+                PanierForm panier = new PanierForm(current);
+                panier.getF().show();
             }
         });
+
+       
+
+       
         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -111,11 +110,28 @@ Form current;
             }
         });
         
-         tb.addMaterialCommandToSideMenu("SAV", FontImage.MATERIAL_WORK, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Client Service", FontImage.MATERIAL_WORK, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
                 sav.getF().show();
+            }
+        });
+         
+         
+           tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_COLLECTIONS, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                GalleryForm about = new GalleryForm();
+                about.getF().show();
+            }
+        });
+        
+                
+         tb.addMaterialCommandToSideMenu("Get Notified", FontImage.MATERIAL_ADD_ALERT, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              new   LocalNotificationTest().start();
             }
         });
 

@@ -15,6 +15,7 @@ import com.codename1.ui.events.ActionListener;
 import com.codename1.ui.layouts.BoxLayout;
 import com.codename1.ui.plaf.UIManager;
 import com.codename1.ui.util.Resources;
+import com.mycompany.myapp.services.LocalNotificationTest;
 
 /**
  *
@@ -54,11 +55,19 @@ public class ChoiceEvents {
             }
         });
           
-        tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
+         tb.addMaterialCommandToSideMenu("Home", FontImage.MATERIAL_HOME, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
                 new HomeForm().show();
 
+            }
+        });
+        
+          tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                StoreForm store = new StoreForm();
+                store.getF().show();
             }
         });
 
@@ -70,21 +79,9 @@ public class ChoiceEvents {
             }
         });
 
-        tb.addMaterialCommandToSideMenu("Store", FontImage.MATERIAL_STORE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                 ListeProduct store = new ListeProduct(f);
-                store.getF().show();
-            }
-        });
+       
 
-        tb.addMaterialCommandToSideMenu("Recruitement", FontImage.MATERIAL_FACE, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                RecruitForm recruit = new RecruitForm();
-                recruit.getF().show();
-            }
-        });
+       
         tb.addMaterialCommandToSideMenu("Events", FontImage.MATERIAL_EVENT, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -98,6 +95,23 @@ public class ChoiceEvents {
             public void actionPerformed(ActionEvent evt) {
                 SavForm sav = new SavForm();
                 sav.getF().show();
+            }
+        });
+         
+         
+           tb.addMaterialCommandToSideMenu("Gallery", FontImage.MATERIAL_COLLECTIONS, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+                GalleryForm about = new GalleryForm();
+                about.getF().show();
+            }
+        });
+        
+                
+         tb.addMaterialCommandToSideMenu("Get Notified", FontImage.MATERIAL_ADD_ALERT, new ActionListener() {   
+            @Override
+            public void actionPerformed(ActionEvent evt) {
+              new   LocalNotificationTest().start();
             }
         });
 
